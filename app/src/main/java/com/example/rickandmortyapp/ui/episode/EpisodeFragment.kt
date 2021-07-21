@@ -13,32 +13,27 @@ import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 class EpisodeFragment : Fragment() {
 
     private lateinit var episodeViewModel: EpisodeViewModel
-    private var _binding: FragmentEpisodeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentEpisodeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         episodeViewModel =
             ViewModelProvider(this).get(EpisodeViewModel::class.java)
 
-        _binding = FragmentEpisodeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
+        initViews()
+
+        return binding.root
+    }
+
+    private fun initViews() = with(binding) {
         val textView: TextView = binding.textEpisode
         episodeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -13,32 +13,27 @@ import com.example.rickandmortyapp.databinding.FragmentLocationBinding
 class LocationFragment : Fragment() {
 
     private lateinit var locationViewModel: LocationViewModel
-    private var _binding: FragmentLocationBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentLocationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         locationViewModel =
             ViewModelProvider(this).get(LocationViewModel::class.java)
 
-        _binding = FragmentLocationBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentLocationBinding.inflate(inflater, container, false)
 
+        initViews()
+
+        return binding.root
+    }
+
+    private fun initViews() {
         val textView: TextView = binding.textLocation
         locationViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
