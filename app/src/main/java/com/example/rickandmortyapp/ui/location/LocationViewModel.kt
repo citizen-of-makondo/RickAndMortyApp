@@ -1,13 +1,13 @@
-package com.example.rickandmortyapp.ui.dashboard
+package com.example.rickandmortyapp.ui.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class LocationViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is location Fragment"
     }
     val text: LiveData<String> = _text
 }

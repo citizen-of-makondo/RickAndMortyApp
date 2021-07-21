@@ -1,13 +1,13 @@
-package com.example.rickandmortyapp.ui.home
+package com.example.rickandmortyapp.ui.character
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class CharacterViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is character Fragment"
     }
     val text: LiveData<String> = _text
 }

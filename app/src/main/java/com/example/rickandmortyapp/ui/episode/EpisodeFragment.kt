@@ -1,4 +1,4 @@
-package com.example.rickandmortyapp.ui.notifications
+package com.example.rickandmortyapp.ui.episode
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.databinding.FragmentNotificationsBinding
+import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 
-class NotificationsFragment : Fragment() {
+class EpisodeFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentNotificationsBinding? = null
+    private lateinit var episodeViewModel: EpisodeViewModel
+    private var _binding: FragmentEpisodeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +24,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        episodeViewModel =
+            ViewModelProvider(this).get(EpisodeViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentEpisodeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textEpisode
+        episodeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
