@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,7 @@ import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 class EpisodeFragment : Fragment() {
 
     private lateinit var episodeViewModel: EpisodeViewModel
-    private lateinit var binding: FragmentEpisodeBinding
+    private var binding: FragmentEpisodeBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,13 +26,20 @@ class EpisodeFragment : Fragment() {
 
         initViews()
 
-        return binding.root
+        return binding!!.root
     }
 
     private fun initViews() = with(binding) {
-        val textView: TextView = binding.textEpisode
+        val textView = this?.textEpisode
         episodeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            textView?.run {
+                textView.text = it
+            }
         })
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 }
