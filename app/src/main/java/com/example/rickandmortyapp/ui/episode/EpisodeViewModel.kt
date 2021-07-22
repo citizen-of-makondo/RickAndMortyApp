@@ -1,13 +1,13 @@
-package com.example.rickandmortyapp.ui.notifications
+package com.example.rickandmortyapp.ui.episode
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class EpisodeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is episode Fragment"
     }
     val text: LiveData<String> = _text
 }
