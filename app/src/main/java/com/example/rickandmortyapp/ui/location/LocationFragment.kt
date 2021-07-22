@@ -12,7 +12,9 @@ import com.example.rickandmortyapp.databinding.FragmentLocationBinding
 class LocationFragment : Fragment() {
 
     private lateinit var locationViewModel: LocationViewModel
-    private var binding: FragmentLocationBinding? = null
+    private var _binding: FragmentLocationBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,24 +24,22 @@ class LocationFragment : Fragment() {
         locationViewModel =
             ViewModelProvider(this).get(LocationViewModel::class.java)
 
-        binding = FragmentLocationBinding.inflate(inflater, container, false)
+        _binding = FragmentLocationBinding.inflate(inflater, container, false)
 
         initViews()
 
-        return binding!!.root
+        return binding.root
     }
 
     private fun initViews() {
-        val textView = binding?.textLocation
+        val textView = binding.textLocation
         locationViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView?.run {
-                textView.text = it
-            }
+            textView.text = it
         })
     }
 
     override fun onDestroyView() {
-        binding = null
+        _binding = null
         super.onDestroyView()
     }
 }

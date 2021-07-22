@@ -12,7 +12,9 @@ import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 class CharacterFragment : Fragment() {
 
     private lateinit var characterViewModel: CharacterViewModel
-    private var binding: FragmentCharacterBinding? = null
+    private var _binding: FragmentCharacterBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,24 +24,22 @@ class CharacterFragment : Fragment() {
         characterViewModel =
             ViewModelProvider(this).get(CharacterViewModel::class.java)
 
-        binding = FragmentCharacterBinding.inflate(inflater, container, false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
         initViews()
 
-        return binding!!.root
+        return binding.root
     }
 
     private fun initViews() = with(binding) {
-        val textView = this?.textCharacter
+        val textView = this.textCharacter
         characterViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView?.run {
-                textView.text = it
-            }
+            textView.text = it
         })
     }
 
     override fun onDestroyView() {
-        binding = null
         super.onDestroyView()
+        _binding = null
     }
 }
