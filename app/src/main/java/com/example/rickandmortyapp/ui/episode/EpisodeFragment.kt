@@ -10,7 +10,6 @@ import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EpisodeFragment : Fragment() {
-
     private val episodeViewModel: EpisodeViewModel by viewModel()
     private var _binding: FragmentEpisodeBinding? = null
 
@@ -21,7 +20,6 @@ class EpisodeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
         initViews()

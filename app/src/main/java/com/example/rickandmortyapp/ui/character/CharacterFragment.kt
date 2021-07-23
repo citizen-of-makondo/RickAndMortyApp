@@ -10,7 +10,6 @@ import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
-
     private val characterViewModel: CharacterViewModel by viewModel()
     private var _binding: FragmentCharacterBinding? = null
 
@@ -21,7 +20,6 @@ class CharacterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
         initViews()
@@ -30,7 +28,6 @@ class CharacterFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-
         val textView = this.textCharacter
         characterViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

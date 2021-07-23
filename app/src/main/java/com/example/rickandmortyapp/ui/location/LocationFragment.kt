@@ -10,7 +10,6 @@ import com.example.rickandmortyapp.databinding.FragmentLocationBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LocationFragment : Fragment() {
-
     private val locationViewModel: LocationViewModel by viewModel()
     private var _binding: FragmentLocationBinding? = null
 
@@ -21,7 +20,6 @@ class LocationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentLocationBinding.inflate(inflater, container, false)
 
         initViews()
