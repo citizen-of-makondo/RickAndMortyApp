@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EpisodeFragment : Fragment() {
 
-    private lateinit var episodeViewModel: EpisodeViewModel
+    private val episodeViewModel: EpisodeViewModel by viewModel()
     private var _binding: FragmentEpisodeBinding? = null
 
     private val binding get() = _binding!!
@@ -21,8 +21,6 @@ class EpisodeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        episodeViewModel =
-            ViewModelProvider(this).get(EpisodeViewModel::class.java)
 
         _binding = FragmentEpisodeBinding.inflate(inflater, container, false)
 
