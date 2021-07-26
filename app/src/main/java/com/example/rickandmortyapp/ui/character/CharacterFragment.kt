@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,16 +23,13 @@ class CharacterFragment : Fragment() {
     ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
 
-        initViews()
+        initViews(view)
 
         return binding.root
     }
 
-    private fun initViews() = with(binding) {
-        val textView = this.textCharacter
-        characterViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+    private fun initViews(view: View?) = with(binding) {
+        var characterList = view?.findViewById<RecyclerView>(R.id.character_list)
     }
 
     override fun onDestroyView() {
