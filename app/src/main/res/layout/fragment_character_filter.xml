@@ -9,7 +9,7 @@
     android:paddingTop="4dp"
     android:paddingEnd="8dp"
     android:id="@+id/frament_character_filter"
-    tools:context=".ui.character.CharachterFilterFragment">
+    tools:context=".ui.character.CharacterFilterFragment">
 
     <TextView
         android:id="@+id/choose_status_textView"
@@ -207,7 +207,7 @@
         android:id="@+id/use_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Use filters"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

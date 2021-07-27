@@ -11,8 +11,8 @@
 
     <item
         android:id="@+id/filter_menu"
-        android:title="Filter"
         android:icon="@drawable/ic_baseline_filter_alt_24"
-        app:actionViewClass="com.google.android.material.button.MaterialButton" />
+        android:title="Filter"
+        app:showAsAction="always|collapseActionView" />
 
 </menu>

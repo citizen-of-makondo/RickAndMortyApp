@@ -8,14 +8,14 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.rickandmortyapp.R
 
-class CharachterFilterFragment : Fragment() {
+class CharacterFilterFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         initViews(view)
-        return inflater.inflate(R.layout.fragment_charachter_filter, container, false)
+        return inflater.inflate(R.layout.fragment_character_filter, container, false)
     }
 
     private fun initViews(view: View?) {
