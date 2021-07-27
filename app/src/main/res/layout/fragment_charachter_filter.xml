@@ -8,6 +8,7 @@
     android:paddingStart="8dp"
     android:paddingTop="4dp"
     android:paddingEnd="8dp"
+    android:id="@+id/frament_character_filter"
     tools:context=".ui.character.CharachterFilterFragment">
 
     <TextView
