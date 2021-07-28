@@ -34,12 +34,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
-                    android:textAppearance="?attr/textAppearanceHeadline4" />
+                    android:textAppearance="?attr/textAppearanceHeadline5" />
 
                 <TextView
+                    android:id="@+id/gender_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:textAppearance="?attr/textAppearanceBody1" />
+
+                <TextView
+                    android:id="@+id/status_TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Status"
+                    android:textAppearance="?attr/textAppearanceBody2" />
+
+                <TextView
+                    android:id="@+id/specie_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Specie"
                     android:textAppearance="?attr/textAppearanceBody2" />
 
             </LinearLayout>

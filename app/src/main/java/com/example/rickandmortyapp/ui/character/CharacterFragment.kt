@@ -23,7 +23,7 @@ class CharacterFragment : Fragment() {
 
     private var recyclerView: RecyclerView? = null
     private var adapter: RecyclerView.Adapter<*>? = null
-    var listOfusers: ArrayList<Character> = ArrayList()
+    var listUsers: ArrayList<Character> = ArrayList()
 
     private val characterViewModel: CharacterViewModel by viewModel()
     private var _binding: FragmentCharacterBinding? = null
@@ -51,15 +51,15 @@ class CharacterFragment : Fragment() {
         //adding items in list
         for (i in 0..10) {
             val user = Character(i, "Персонаж $i", "Unknown", "Unknown", "PathImage")
-            listOfusers.add(user)
+            listUsers.add(user)
         }
         recyclerView = view.findViewById(R.id.character_list)
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView!!.layoutManager = layoutManager
-        adapter = CharacterAdapter(listOfusers)
+        adapter = CharacterAdapter(listUsers)
         recyclerView!!.adapter = adapter
 
-        var isLastPage: Boolean = false
+        val isLastPage: Boolean = false
         var isLoading: Boolean = false
 
         recyclerView!!.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -78,7 +78,7 @@ class CharacterFragment : Fragment() {
 
             private fun getMoreItems() {
                 isLoading = false
-                (adapter as CharacterAdapter).addData(listOfusers)
+                (adapter as CharacterAdapter).addData(listUsers)
             }
         })
     }
