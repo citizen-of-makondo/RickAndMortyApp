@@ -3,6 +3,7 @@ package com.example.rickandmortyapp.ui.character
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapp.model.Character
+import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
@@ -47,8 +49,8 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //adding items in list
-        for (i in 0..4) {
-            val user = Character(i, "Персонаж $i")
+        for (i in 0..10) {
+            val user = Character(i, "Персонаж $i", "Unknown", "Unknown", "PathImage")
             listOfusers.add(user)
         }
         recyclerView = view.findViewById(R.id.character_list)
@@ -56,17 +58,39 @@ class CharacterFragment : Fragment() {
         recyclerView!!.layoutManager = layoutManager
         adapter = CharacterAdapter(listOfusers)
         recyclerView!!.adapter = adapter
+
+        var isLastPage: Boolean = false
+        var isLoading: Boolean = false
+
+        recyclerView!!.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                getMoreItems()
+            }
+
+            private fun getMoreItems() {
+                isLoading = false
+                (adapter as CharacterAdapter).addData(listOfusers)
+            }
+        })
     }
 
     private fun initViews(view: View?) = with(binding) {
         var characterList = view?.findViewById<RecyclerView>(R.id.character_list)
+        val useFilterButton = view?.findViewById<Button>(R.id.use_filter)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,7 +102,8 @@ class CharacterFragment : Fragment() {
     }
 
     private fun searchCharacter(item: MenuItem) {
-        val manager = requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
+        val manager =
+            requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
         val searchView = item.actionView as SearchView
 
         searchView.setSearchableInfo(manager.getSearchableInfo(requireActivity().componentName))

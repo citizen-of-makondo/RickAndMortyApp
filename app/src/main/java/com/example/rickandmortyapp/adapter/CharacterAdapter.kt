@@ -12,7 +12,7 @@ class CharacterAdapter(
     private val dataList: ArrayList<Character>
 ) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var nameTextView: TextView
 
         init {
@@ -33,6 +33,16 @@ class CharacterAdapter(
 
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun addData(listOfusers: java.util.ArrayList<Character>) {
+        var size = this.dataList.size
+        for (i in 0..40) {
+            val user = Character(i, "Персонаж ${i + size + 200}", "Unknown", "Unknown", "PathImage")
+            listOfusers.add(user)
+        }
+        var sizeNew = this.dataList.size
+        notifyItemRangeChanged(size, sizeNew)
     }
 
 }
