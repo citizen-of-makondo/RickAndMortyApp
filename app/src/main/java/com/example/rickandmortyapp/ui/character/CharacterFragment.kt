@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
@@ -71,7 +72,7 @@ class CharacterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_menu -> {
-                characterViewModel.filterCharacterNavigation(requireActivity())
+                filterCharacterNavigation(item)
                 true
             }
             R.id.search_menu -> {
@@ -99,6 +100,11 @@ class CharacterFragment : Fragment() {
                 }
             })
         }
+    }
+
+    fun filterCharacterNavigation(item: MenuItem) {
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
+            .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
     }
 
     override fun onDestroyView() {
