@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rickandmortyapp.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

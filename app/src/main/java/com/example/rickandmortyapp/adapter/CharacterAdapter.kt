@@ -4,21 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.model.Character
+import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
 class CharacterAdapter(
-    private val dataList: ArrayList<Character>
+    private val dataList: MutableList<Character>,
 ) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal var nameTextView: TextView
-
-        init {
-            nameTextView = itemView.findViewById(R.id.name_TextView) as TextView
-
-        }
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,18 +28,13 @@ class CharacterAdapter(
         holder.nameTextView.text = dataList[position].name
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
+    override fun getItemCount() = dataList.size
 
-    fun addData(listOfusers: java.util.ArrayList<Character>) {
-        var size = this.dataList.size
-        for (i in 0..40) {
-            val user = Character(i, "Персонаж ${i + size + 200}", "Unknown", "Unknown", "PathImage")
-            listOfusers.add(user)
-        }
-        var sizeNew = this.dataList.size
-        notifyItemRangeChanged(size, sizeNew)
+    fun updateData(newList: ArrayList<Character>) {
+        val characterDiffCallback = CharacterDiffCallback(dataList, newList)
+        val characterDiffResult = DiffUtil.calculateDiff(characterDiffCallback)
+        dataList.clear()
+        dataList.addAll(newList)
+        characterDiffResult.dispatchUpdatesTo(this)
     }
-
 }

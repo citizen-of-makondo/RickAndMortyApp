@@ -20,8 +20,8 @@
             android:id="@+id/choose_type_of_location_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose type"
-            android:textSize="24dp"
+            android:text="@string/choose_type"
+            android:textSize="@dimen/textsize_24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,252 +40,252 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Planet" />
+                android:text="@string/planet" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_cluster"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cluster" />
+                android:text="@string/cluster" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_space_station"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Space Station" />
+                android:text="@string/space_station" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_microverse"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Microverse" />
+                android:text="@string/microverse" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_tv"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TV" />
+                android:text="@string/tv" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_resort"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Resort" />
+                android:text="@string/resort" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_fantasy_town"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fantasy town" />
+                android:text="@string/fantasy_town" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_dream"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dream" />
+                android:text="@string/dream" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_dimension"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dimension" />
+                android:text="@string/dimension" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_menagerie"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Menagerie" />
+                android:text="@string/menagerie" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_game"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Game" />
+                android:text="@string/game" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_customs"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customs" />
+                android:text="@string/customs" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_dwarf_planet"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dwarf planet" />
+                android:text="@string/dwarf_planet" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_daycare"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daycare" />
+                android:text="@string/daycare" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_teenyverse"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Teenyverse" />
+                android:text="@string/teenyverse" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_box"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Box" />
+                android:text="@string/box" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_spacecraft"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spacecraft" />
+                android:text="@string/spacecraft" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_artificially_generated_world"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Generated world" />
+                android:text="@string/generated_world" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_machine"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Machine" />
+                android:text="@string/machine" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_arcade"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Arcade" />
+                android:text="@string/arcade" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_spa"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spa" />
+                android:text="@string/spa" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_quadrant"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quadrant" />
+                android:text="@string/quadrant" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_quasar"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quasar" />
+                android:text="@string/quasar" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_mount"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mount" />
+                android:text="@string/mount" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_liquid"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Liquid" />
+                android:text="@string/liquid" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_convention"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Convention" />
+                android:text="@string/convention" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_woods"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Woods" />
+                android:text="@string/woods" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_diegesis"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Diegesis" />
+                android:text="@string/diegesis" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_Non_Diegetic_alternative_reality"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alternative Reality" />
+                android:text="@string/alternative_reality" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_nightmare"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nightmare" />
+                android:text="@string/nightmare" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_asteroid"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Asteroid" />
+                android:text="@string/asteroid" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_acid_plant"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Acid plant" />
+                android:text="@string/acid_plant" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_reality"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reality" />
+                android:text="@string/reality" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_death_star"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Death Star" />
+                android:text="@string/death_star" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_base"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Base" />
+                android:text="@string/base" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_unknown"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Unknown" />
+                android:text="@string/unknown" />
 
         </com.google.android.material.chip.ChipGroup>
 
@@ -293,7 +293,7 @@
             android:id="@+id/choose_dimension"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose dimension"
+            android:text="@string/choose_dimension"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/location_group"
@@ -314,210 +314,210 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C-137" />
+                android:text="@string/c_137" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_dimension_unknown"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Unknown" />
+                android:text="@string/unknown" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_post_apocalyptic"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Post-Apocalyptic" />
+                android:text="@string/post_apocalyptic" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_cronenberg"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cronenberg" />
+                android:text="@string/cronenberg" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_fantasy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fantasy" />
+                android:text="@string/fantasy" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_replacement"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Replacement" />
+                android:text="@string/replacement" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_5_126"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5-126" />
+                android:text="@string/_5_126" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_testicle_monster"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Testicle Monster" />
+                android:text="@string/testicle_monster" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_cromulon"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cromulon" />
+                android:text="@string/cromulon" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_c500A"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C-500A" />
+                android:text="@string/c_500a" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_K83"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="K-83" />
+                android:text="@string/k_83" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_J197"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="J19ζ7" />
+                android:text="@string/j19_7" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_Eric_Stoltz_Mask"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Eric Stoltz Mask" />
+                android:text="@string/eric_stoltz_mask" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_Evil_Rick_Target"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Evil Rick's Target" />
+                android:text="@string/evil_rick_s_target" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_K22"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="K-22" />
+                android:text="@string/k_22" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_giant_telepathic_spiders"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giant Telepathic Spiders" />
+                android:text="@string/giant_telepathic_spiders" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_D99"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D-99" />
+                android:text="@string/d_99" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_D716"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D716" />
+                android:text="@string/d716" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_D716B"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D716-B" />
+                android:text="@string/d716_b" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_D716C"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D-716C" />
+                android:text="@string/d_716c" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_J22"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="J-22" />
+                android:text="@string/j_22" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_C35"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C-35" />
+                android:text="@string/c_35" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_pizza"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pizza" />
+                android:text="@string/pizza" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_phone"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone" />
+                android:text="@string/phone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_chair"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chair" />
+                android:text="@string/chair" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_fancist"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fancist" />
+                android:text="@string/fancist" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_wasp"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wasp" />
+                android:text="@string/wasp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_tusk"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tusk" />
+                android:text="@string/tusk" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_magic"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Magic" />
+                android:text="@string/magic" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_merged"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Merged" />
+                android:text="@string/merged" />
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.button.MaterialButton
@@ -527,7 +527,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Use filters" />
+            android:text="@string/use_filters" />
 
     </LinearLayout>
 </ScrollView>

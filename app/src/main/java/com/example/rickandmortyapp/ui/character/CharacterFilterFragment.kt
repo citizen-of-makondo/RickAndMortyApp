@@ -4,24 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.rickandmortyapp.R
+import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 class CharacterFilterFragment : Fragment() {
+    private var _binding: FragmentCharacterFilterBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentCharacterFilterBinding.inflate(inflater, container, false)
         initViews(view)
-        return inflater.inflate(R.layout.fragment_character_filter, container, false)
+        return binding.root
     }
 
     private fun initViews(view: View?) {
-        val useFilterButton = view?.findViewById<Button>(R.id.use_filter)
-        useFilterButton?.setOnClickListener {
+        val useFilterButton = binding.useFilter
+        useFilterButton.setOnClickListener {
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

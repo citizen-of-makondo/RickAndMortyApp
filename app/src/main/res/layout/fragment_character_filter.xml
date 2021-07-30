@@ -15,8 +15,8 @@
         android:id="@+id/choose_status_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose status"
-        android:textSize="24dp"
+        android:text="@string/choose_status"
+        android:textSize="@dimen/textsize_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,21 +34,21 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alive" />
+            android:text="@string/alive" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/status_dead"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dead" />
+            android:text="@string/dead" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/status_unknown"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Unknown" />
+            android:text="@string/unknown" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -56,8 +56,8 @@
         android:id="@+id/choose_gender_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose gender"
-        android:textSize="24dp"
+        android:text="@string/choose_gender"
+        android:textSize="@dimen/textsize_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/status_group"
         tools:layout_editor_absoluteX="8dp"
@@ -77,36 +77,36 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="@string/male" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_female"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="@string/female" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_genderless"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genderless" />
+            android:text="@string/genderless" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_unknown"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Unknown" />
+            android:text="@string/unknown" />
     </com.google.android.material.chip.ChipGroup>
 
     <TextView
         android:id="@+id/choose_specie_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose specie"
-        android:textSize="24dp"
+        android:text="@string/choose_specie"
+        android:textSize="@dimen/textsize_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gender_group"
         tools:layout_editor_absoluteX="8dp"
@@ -126,21 +126,21 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Human" />
+            android:text="@string/human" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_alien"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alien" />
+            android:text="@string/alien" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_humanoid"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humanoid" />
+            android:text="@string/humanoid" />
 
 
         <com.google.android.material.chip.Chip
@@ -148,7 +148,7 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Poopybutthole" />
+            android:text="@string/poopybutthole" />
 
 
         <com.google.android.material.chip.Chip
@@ -156,7 +156,7 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mythological" />
+            android:text="@string/mythological" />
 
 
         <com.google.android.material.chip.Chip
@@ -164,43 +164,42 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Animal" />
-
+            android:text="@string/animal" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_robot"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Robot" />
+            android:text="@string/robot" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_cronenberg"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cronenberg" />
+            android:text="@string/cronenberg" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_disease"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disease" />
+            android:text="@string/disease" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_planet"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Planet" />
+            android:text="@string/planet" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_unknown"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Unknown" />
+            android:text="@string/unknown" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.button.MaterialButton
@@ -208,7 +207,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Use filters"
+        android:text="@string/use_filters"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

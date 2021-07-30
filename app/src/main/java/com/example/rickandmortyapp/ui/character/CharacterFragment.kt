@@ -3,14 +3,11 @@ package com.example.rickandmortyapp.ui.character
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
@@ -19,28 +16,20 @@ import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
-    private lateinit var navController: NavController
-
-    private var recyclerView: RecyclerView? = null
-    private var adapter: RecyclerView.Adapter<*>? = null
-    var listUsers: ArrayList<Character> = ArrayList()
-
     private val characterViewModel: CharacterViewModel by viewModel()
     private var _binding: FragmentCharacterBinding? = null
 
     private val binding get() = _binding!!
 
+    var firstListCharacter: ArrayList<Character> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
-        navController =
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
         setHasOptionsMenu(true)
-
-        initViews(view)
 
         return binding.root
     }
@@ -48,25 +37,19 @@ class CharacterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //adding items in list
         for (i in 0..10) {
-            val user = Character(i, "Персонаж $i", "Unknown", "Unknown", "PathImage")
-            listUsers.add(user)
+            firstListCharacter.add(Character(i, "Персонаж $i", "Unknown", "Unknown", "PathImage"))
         }
-        recyclerView = view.findViewById(R.id.character_list)
+
+        val recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerView!!.layoutManager = layoutManager
-        adapter = CharacterAdapter(listUsers)
-        recyclerView!!.adapter = adapter
+        recyclerView.layoutManager = layoutManager
+        val adapter = CharacterAdapter(firstListCharacter)
+        recyclerView.adapter = adapter
 
-        val isLastPage: Boolean = false
-        var isLoading: Boolean = false
+        var isLoading = false
 
-        recyclerView!!.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
+        recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
                 return isLoading
             }
@@ -78,51 +61,64 @@ class CharacterFragment : Fragment() {
 
             private fun getMoreItems() {
                 isLoading = false
-                (adapter as CharacterAdapter).addData(listUsers)
+
+                var newList: ArrayList<Character> = ArrayList()
+                newList.addAll(firstListCharacter)
+                for (i in 0..5) {
+                    val character = Character(i + firstListCharacter.size,
+                        "Персонаж ${i + firstListCharacter.size}",
+                        "Unknown",
+                        "Unknown",
+                        "PathImage")
+                    newList.add(character)
+                }
+
+                adapter.updateData(newList)
             }
         })
     }
 
-    private fun initViews(view: View?) = with(binding) {
-        var characterList = view?.findViewById<RecyclerView>(R.id.character_list)
-        val useFilterButton = view?.findViewById<Button>(R.id.use_filter)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.filter_menu -> filterCharacter()
-            R.id.search_menu -> searchCharacter(item)
+        return when (item.itemId) {
+            R.id.filter_menu -> {
+                filterCharacterNavigation()
+                true
+            }
+            R.id.search_menu -> {
+                searchCharacter(item)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return true
     }
 
     private fun searchCharacter(item: MenuItem) {
         val manager =
             requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
-        val searchView = item.actionView as SearchView
+        (item.actionView as SearchView).apply {
+            setSearchableInfo(manager.getSearchableInfo(requireActivity().componentName))
+            queryHint = "Search"
 
-        searchView.setSearchableInfo(manager.getSearchableInfo(requireActivity().componentName))
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
 
-        searchView.queryHint = "Search"
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return true
-            }
-        })
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+            })
+        }
     }
 
-    private fun filterCharacter() {
-        navController.navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment3())
+    private fun filterCharacterNavigation() {
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
+            .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
     }
 
     override fun onDestroyView() {

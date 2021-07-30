@@ -11,7 +11,7 @@
         android:label="@string/title_characters"
         tools:layout="@layout/fragment_character" >
         <action
-            android:id="@+id/action_navigation_character_to_characterFilterFragment3"
+            android:id="@+id/action_navigation_character_to_characterFilterFragment"
             app:destination="@id/characterFilterFragment" />
     </fragment>
 

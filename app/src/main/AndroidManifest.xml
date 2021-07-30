@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RickAndMortyApp">
         <activity android:name=".ui.SplashScreenActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar">
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
