@@ -1,13 +1,28 @@
 package com.example.rickandmortyapp.ui.character
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.rickandmortyapp.model.Character
 
 class CharacterViewModel : ViewModel() {
+    var listCharacter = MutableLiveData<List<Character>>()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is character Fragment"
+    init {
+        listCharacter.value =
+            List(10) { Character(it, "Персонаж $it", "Unknown", "Unknown", "PathImage") }
     }
-    val text: LiveData<String> = _text
+
+    fun getMoreData() {
+        val list = listCharacter.value.orEmpty().toMutableList()
+        val size = list.size
+        repeat(10) {
+            val character = Character(it + size,
+                "Персонаж ${it + size}",
+                "Unknown",
+                "Unknown",
+                "PathImage")
+            list.add(character)
+        }
+        listCharacter.value = list
+    }
 }
