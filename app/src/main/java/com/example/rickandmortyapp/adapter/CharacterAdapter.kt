@@ -10,18 +10,15 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.model.Character
 import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
-class CharacterAdapter(
-    private val dataList: MutableList<Character>,
-) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
-
+class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
+        val nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
     }
+    private val dataList = mutableListOf<Character>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_character_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(LayoutInflater.from(parent.context)
+            .inflate(R.layout.fragment_character_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -30,7 +27,7 @@ class CharacterAdapter(
 
     override fun getItemCount() = dataList.size
 
-    fun updateData(newList: ArrayList<Character>) {
+    fun updateData(newList: List<Character>) {
         val characterDiffCallback = CharacterDiffCallback(dataList, newList)
         val characterDiffResult = DiffUtil.calculateDiff(characterDiffCallback)
         dataList.clear()

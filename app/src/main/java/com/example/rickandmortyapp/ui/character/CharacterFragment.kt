@@ -6,12 +6,11 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
-import com.example.rickandmortyapp.model.Character
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,8 +19,6 @@ class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
 
     private val binding get() = _binding!!
-
-    var firstListCharacter: ArrayList<Character> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +34,15 @@ class CharacterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        for (i in 0..10) {
-            firstListCharacter.add(Character(i, "Персонаж $i", "Unknown", "Unknown", "PathImage"))
-        }
-
         val recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        val adapter = CharacterAdapter(firstListCharacter)
+        val adapter = CharacterAdapter()
         recyclerView.adapter = adapter
+
+        characterViewModel.listCharacter.observe(viewLifecycleOwner, Observer {
+            adapter.updateData(it)
+        })
 
         var isLoading = false
 
@@ -61,19 +58,7 @@ class CharacterFragment : Fragment() {
 
             private fun getMoreItems() {
                 isLoading = false
-
-                var newList: ArrayList<Character> = ArrayList()
-                newList.addAll(firstListCharacter)
-                for (i in 0..5) {
-                    val character = Character(i + firstListCharacter.size,
-                        "Персонаж ${i + firstListCharacter.size}",
-                        "Unknown",
-                        "Unknown",
-                        "PathImage")
-                    newList.add(character)
-                }
-
-                adapter.updateData(newList)
+                characterViewModel.getMoreData()
             }
         })
     }
@@ -86,7 +71,7 @@ class CharacterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_menu -> {
-                filterCharacterNavigation()
+                characterViewModel.filterCharacterNavigation(requireActivity())
                 true
             }
             R.id.search_menu -> {
@@ -97,7 +82,7 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private fun searchCharacter(item: MenuItem) {
+    fun searchCharacter(item: MenuItem) {
         val manager =
             requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
         (item.actionView as SearchView).apply {
@@ -114,11 +99,6 @@ class CharacterFragment : Fragment() {
                 }
             })
         }
-    }
-
-    private fun filterCharacterNavigation() {
-        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
-            .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
     }
 
     override fun onDestroyView() {
