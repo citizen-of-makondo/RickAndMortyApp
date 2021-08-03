@@ -2,21 +2,31 @@ package com.example.rickandmortyapp.ui.character
 
 import android.app.SearchManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
+import com.example.rickandmortyapp.data.api.CharacterApiHelper
+import com.example.rickandmortyapp.data.api.CharacterRetrofitBuilder
+import com.example.rickandmortyapp.data.model.CharacterDTO
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
+import com.example.rickandmortyapp.model.CharacterLoadStatus
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.rickandmortyapp.ui.ViewModelFactory
 
 class CharacterFragment : Fragment() {
-    private val characterViewModel: CharacterViewModel by viewModel()
+    var TAG = "Fragment"
+
+    private lateinit var characterViewModel: CharacterViewModel
+    private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
 
     private val binding get() = _binding!!
@@ -35,15 +45,56 @@ class CharacterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewModel()
+        setupUI()
+        setupObservers()
+    }
+
+    private fun setupObservers() = with(binding) {
+        characterViewModel.getUsers().observe(viewLifecycleOwner, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    CharacterLoadStatus.SUCCESS -> {
+                        progressBar.visibility = View.GONE
+                        characterList.visibility = View.VISIBLE
+                        resource.data?.let {
+                            val characterList: MutableList<CharacterDTO> = mutableListOf()
+                            characterList.addAll(it.results)
+                            retrieveList(characterList)
+                        }
+                    }
+                    CharacterLoadStatus.LOADING -> {
+                        progressBar.visibility = View.VISIBLE
+                        characterList.visibility = View.GONE
+                    }
+                    CharacterLoadStatus.ERROR -> {
+                        characterList.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            it.message,
+                            Toast.LENGTH_SHORT)
+                            .show()
+                        Log.d(TAG, "setupObservers: ${it.message}")
+                    }
+                }
+            }
+        })
+    }
+
+    private fun retrieveList(users: MutableList<CharacterDTO>) {
+        adapter.apply {
+            updateData(users)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun setupUI() {
         val recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        val adapter = CharacterAdapter()
+        adapter = CharacterAdapter()
         recyclerView.adapter = adapter
-
-        characterViewModel.listCharacter.observe(viewLifecycleOwner, Observer {
-            adapter.updateData(it)
-        })
 
         var isLoading = false
 
@@ -59,9 +110,16 @@ class CharacterFragment : Fragment() {
 
             private fun getMoreItems() {
                 isLoading = false
-                characterViewModel.getMoreData()
+                // characterViewModel.getMoreData()
             }
         })
+    }
+
+    private fun setupViewModel() {
+        characterViewModel = ViewModelProviders.of(
+            this,
+            ViewModelFactory(CharacterApiHelper(CharacterRetrofitBuilder.API_SERVICE))
+        ).get(CharacterViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
