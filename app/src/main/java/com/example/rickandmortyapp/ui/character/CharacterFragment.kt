@@ -2,7 +2,6 @@ package com.example.rickandmortyapp.ui.character
 
 import android.app.SearchManager
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,7 @@ import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import com.example.rickandmortyapp.ui.ViewModelFactory
 
 class CharacterFragment : Fragment() {
-    var TAG = "Fragment"
+        var isLoading = false
 
     private lateinit var characterViewModel: CharacterViewModel
     private lateinit var adapter: CharacterAdapter
@@ -51,16 +50,17 @@ class CharacterFragment : Fragment() {
     }
 
     private fun setupObservers() = with(binding) {
-        characterViewModel.getUsers().observe(viewLifecycleOwner, Observer {
+        characterViewModel.liveData.observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     CharacterLoadStatus.SUCCESS -> {
                         progressBar.visibility = View.GONE
                         characterList.visibility = View.VISIBLE
                         resource.data?.let {
-                            val characterList: MutableList<CharacterDTO> = mutableListOf()
-                            characterList.addAll(it.results)
-                            retrieveList(characterList)
+                            val characterListData: MutableList<CharacterDTO> = mutableListOf()
+                            characterListData.addAll(it)
+                            retrieveList(characterListData)
+                            isLoading = false
                         }
                     }
                     CharacterLoadStatus.LOADING -> {
@@ -73,9 +73,10 @@ class CharacterFragment : Fragment() {
                         Toast.makeText(
                             requireContext(),
                             it.message,
-                            Toast.LENGTH_SHORT)
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
-                        Log.d(TAG, "setupObservers: ${it.message}")
+                        isLoading = false
                     }
                 }
             }
@@ -96,8 +97,6 @@ class CharacterFragment : Fragment() {
         adapter = CharacterAdapter()
         recyclerView.adapter = adapter
 
-        var isLoading = false
-
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
                 return isLoading
@@ -109,8 +108,7 @@ class CharacterFragment : Fragment() {
             }
 
             private fun getMoreItems() {
-                isLoading = false
-                // characterViewModel.getMoreData()
+                characterViewModel.getUsers(characterViewModel.countPages)
             }
         })
     }
