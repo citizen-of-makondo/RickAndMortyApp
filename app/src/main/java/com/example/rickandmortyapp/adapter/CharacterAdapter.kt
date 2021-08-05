@@ -15,6 +15,7 @@ import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(characterDTO: CharacterDTO) {
+
             nameTextView.text = characterDTO.name
             genderTextView.text = characterDTO.gender
             specieTextView.text = characterDTO.species

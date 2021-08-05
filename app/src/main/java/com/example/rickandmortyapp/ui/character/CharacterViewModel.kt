@@ -8,28 +8,30 @@ import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.Resource
 import kotlinx.coroutines.launch
 
-class CharacterViewModel(private val mainRepository: MainRepository) :
+class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
-    var countPages = 1
-    val liveData = MutableLiveData<Resource<Array<CharacterDTO>>>()
+    var countPages: Int = 1
+    val charactersLiveData = MutableLiveData<Resource<Array<CharacterDTO>>>()
+
+    var loadingLiveData = MutableLiveData<Boolean>()
 
     init {
+        loadingLiveData.value = true
         getUsers(countPages)
     }
 
     fun getUsers(countPages: Int) {
         viewModelScope.launch {
-            if (countPages <= 34) {
-                val oldList = liveData.value?.data ?: arrayOf()
-                liveData.value =
-                    Resource.success(data = oldList + mainRepository.getCharacters(countPages).results)
+            try {
                 this@CharacterViewModel.countPages++
+                loadingLiveData.value = true
+                val oldList = charactersLiveData.value?.data ?: arrayOf()
+                charactersLiveData.value =
+                    Resource.success(data = oldList + mainRepository.getCharacters(countPages).results)
+                loadingLiveData.value = false
+            } catch (exception: Exception) {
+                Resource.error(data = null, message = exception.message ?: "Error Occurred!")
             }
-        }
-        try {
-            //Resource.success(data = mainRepository.getCharacters(page))
-        } catch (exception: Exception) {
-            // emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
 }

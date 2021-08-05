@@ -7,24 +7,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
-import com.example.rickandmortyapp.data.api.CharacterApiHelper
-import com.example.rickandmortyapp.data.api.CharacterRetrofitBuilder
 import com.example.rickandmortyapp.data.model.CharacterDTO
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
-import com.example.rickandmortyapp.model.CharacterLoadStatus
+import com.example.rickandmortyapp.model.LoadStatus
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
-import com.example.rickandmortyapp.ui.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
-        var isLoading = false
+    var isLoading = false
 
-    private lateinit var characterViewModel: CharacterViewModel
+    val characterViewModel: CharacterViewModel by viewModel()
+
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
 
@@ -44,49 +41,40 @@ class CharacterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
         setupUI()
         setupObservers()
     }
 
     private fun setupObservers() = with(binding) {
-        characterViewModel.liveData.observe(viewLifecycleOwner, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    CharacterLoadStatus.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        characterList.visibility = View.VISIBLE
-                        resource.data?.let {
-                            val characterListData: MutableList<CharacterDTO> = mutableListOf()
-                            characterListData.addAll(it)
-                            retrieveList(characterListData)
-                            isLoading = false
-                        }
-                    }
-                    CharacterLoadStatus.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                        characterList.visibility = View.GONE
-                    }
-                    CharacterLoadStatus.ERROR -> {
-                        characterList.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            requireContext(),
-                            it.message,
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+        characterViewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
+            resource ?: return@observe
+            when (resource.status) {
+                LoadStatus.SUCCESS -> {
+                    resource.data?.let {
+                        val characterListData: MutableList<CharacterDTO> = mutableListOf()
+                        characterListData.addAll(it)
+                        adapter.updateData(characterListData)
                         isLoading = false
                     }
                 }
+                LoadStatus.ERROR -> {
+                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
+                    isLoading = false
+                }
             }
-        })
-    }
+        }
 
-    private fun retrieveList(users: MutableList<CharacterDTO>) {
-        adapter.apply {
-            updateData(users)
-            notifyDataSetChanged()
+        characterViewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
+            when (isLoading) {
+                true -> {
+                    progressBar.visibility = View.VISIBLE
+                    characterList.visibility = View.GONE
+                }
+                false -> {
+                    characterList.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -111,13 +99,6 @@ class CharacterFragment : Fragment() {
                 characterViewModel.getUsers(characterViewModel.countPages)
             }
         })
-    }
-
-    private fun setupViewModel() {
-        characterViewModel = ViewModelProviders.of(
-            this,
-            ViewModelFactory(CharacterApiHelper(CharacterRetrofitBuilder.API_SERVICE))
-        ).get(CharacterViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
