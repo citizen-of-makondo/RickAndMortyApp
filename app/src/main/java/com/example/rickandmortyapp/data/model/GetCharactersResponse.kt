@@ -2,12 +2,12 @@ package com.example.rickandmortyapp.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DataDTO(
+data class GetCharactersResponse(
     @SerializedName("results")
-    val results: List<CharacterDTO>
+    val results: List<Character>
 )
 
-data class CharacterDTO(
+data class Character(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
@@ -20,14 +20,8 @@ data class CharacterDTO(
     val type: String,
     @SerializedName("gender")
     val gender: String,
-    //  @SerializedName("status")
-    //   val origin: ArrayList<String>,
-    // @SerializedName("location")
-    //  val location: ArrayList<String>,
     @SerializedName("image")
     val image: String,
-    //  @SerializedName("episode")
-    //  val episode: Array<String>,
     @SerializedName("url")
     val url: String
 )

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
-            name="loadingLiveData"
-            type="Boolean" />
+            name="viewmodel"
+            type="com.example.rickandmortyapp.ui.character.CharacterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +24,7 @@
 
         <ProgressBar
             android:id="@+id/progressBar"
+            android:visibility="@{viewmodel.loadingLiveData? View.VISIBLE : View.GONE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

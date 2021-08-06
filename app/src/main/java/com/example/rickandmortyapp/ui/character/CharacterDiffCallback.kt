@@ -1,11 +1,11 @@
 package com.example.rickandmortyapp.ui.character
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.rickandmortyapp.data.model.CharacterDTO
+import com.example.rickandmortyapp.data.model.Character
 
 class CharacterDiffCallback(
-    var oldList: List<CharacterDTO>,
-    var newList: List<CharacterDTO>
+    var oldList: List<Character>,
+    var newList: List<Character>
 ): DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
 

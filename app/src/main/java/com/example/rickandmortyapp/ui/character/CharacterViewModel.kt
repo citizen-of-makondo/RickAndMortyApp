@@ -3,34 +3,33 @@ package com.example.rickandmortyapp.ui.character
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmortyapp.data.model.CharacterDTO
+import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.data.repository.MainRepository
-import com.example.rickandmortyapp.model.Resource
+import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 
 class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
-    var countPages: Int = 1
-    val charactersLiveData = MutableLiveData<Resource<Array<CharacterDTO>>>()
+    private var pageNumber: Int = 1
+    val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
 
-    var loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData = MutableLiveData<Boolean>()
 
     init {
-        loadingLiveData.value = true
-        getUsers(countPages)
+        getUsers()
     }
 
-    fun getUsers(countPages: Int) {
+    fun getUsers() {
         viewModelScope.launch {
             try {
-                this@CharacterViewModel.countPages++
                 loadingLiveData.value = true
-                val oldList = charactersLiveData.value?.data ?: arrayOf()
+                val oldList = charactersLiveData.value?.data ?: listOf()
                 charactersLiveData.value =
-                    Resource.success(data = oldList + mainRepository.getCharacters(countPages).results)
+                    LoadingStatus.success(data = oldList + mainRepository.getCharacters(pageNumber).results)
+                pageNumber++
                 loadingLiveData.value = false
             } catch (exception: Exception) {
-                Resource.error(data = null, message = exception.message ?: "Error Occurred!")
+                LoadingStatus.error(data = null, message = exception.message ?: "Error Occurred!")
             }
         }
     }

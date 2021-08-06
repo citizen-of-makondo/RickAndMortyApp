@@ -11,15 +11,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
-import com.example.rickandmortyapp.data.model.CharacterDTO
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
-import com.example.rickandmortyapp.model.LoadStatus
+import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
-    var isLoading = false
-
     val characterViewModel: CharacterViewModel by viewModel()
 
     private lateinit var adapter: CharacterAdapter
@@ -33,8 +30,10 @@ class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+        binding.viewmodel = characterViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -48,31 +47,14 @@ class CharacterFragment : Fragment() {
     private fun setupObservers() = with(binding) {
         characterViewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
             resource ?: return@observe
-            when (resource.status) {
-                LoadStatus.SUCCESS -> {
+            when (resource.statusEnum) {
+                LoadStatusEnum.SUCCESS -> {
                     resource.data?.let {
-                        val characterListData: MutableList<CharacterDTO> = mutableListOf()
-                        characterListData.addAll(it)
-                        adapter.updateData(characterListData)
-                        isLoading = false
+                        adapter.updateData(it)
                     }
                 }
-                LoadStatus.ERROR -> {
+                LoadStatusEnum.ERROR -> {
                     Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
-                    isLoading = false
-                }
-            }
-        }
-
-        characterViewModel.loadingLiveData.observe(viewLifecycleOwner) { isLoading ->
-            when (isLoading) {
-                true -> {
-                    progressBar.visibility = View.VISIBLE
-                    characterList.visibility = View.GONE
-                }
-                false -> {
-                    characterList.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
                 }
             }
         }
@@ -87,16 +69,16 @@ class CharacterFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
-                return isLoading
+                return characterViewModel.loadingLiveData.value!!
             }
 
             override fun loadMoreItems() {
-                isLoading = true
+                characterViewModel.loadingLiveData.value = true
                 getMoreItems()
             }
 
             private fun getMoreItems() {
-                characterViewModel.getUsers(characterViewModel.countPages)
+                characterViewModel.getUsers()
             }
         })
     }
