@@ -23,7 +23,7 @@ class CharacterViewModel(val mainRepository: MainRepository) :
         viewModelScope.launch {
             try {
                 loadingLiveData.value = true
-                val oldList = charactersLiveData.value?.data ?: listOf()
+                val oldList = charactersLiveData.value?.data.orEmpty()
                 charactersLiveData.value =
                     LoadingStatus.success(data = oldList + mainRepository.getCharacters(pageNumber).results)
                 pageNumber++

@@ -14,7 +14,6 @@ import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
 class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind(character: Character) {
             nameTextView.text = character.name
             genderTextView.text = character.gender
@@ -25,14 +24,14 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
                 .into(imageItemCharacter)
         }
 
-        val imageItemCharacter = itemView.findViewById(R.id.imageItemCharacter) as ImageView
-        val nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
-        val genderTextView = itemView.findViewById(R.id.genderTextView) as TextView
-        val statusTextView = itemView.findViewById(R.id.statusTextView) as TextView
-        val specieTextView = itemView.findViewById(R.id.specieTextView) as TextView
+        private val imageItemCharacter = itemView.findViewById(R.id.imageItemCharacter) as ImageView
+        private val nameTextView = itemView.findViewById(R.id.nameTextView) as TextView
+        private val genderTextView = itemView.findViewById(R.id.genderTextView) as TextView
+        private val statusTextView = itemView.findViewById(R.id.statusTextView) as TextView
+        private val specieTextView = itemView.findViewById(R.id.specieTextView) as TextView
     }
 
-    val dataList = mutableListOf<Character>()
+    private val dataList = mutableListOf<Character>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

@@ -17,7 +17,7 @@ import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterFragment : Fragment() {
-    val characterViewModel: CharacterViewModel by viewModel()
+    private val characterViewModel: CharacterViewModel by viewModel()
 
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
@@ -44,7 +44,7 @@ class CharacterFragment : Fragment() {
         setupObservers()
     }
 
-    private fun setupObservers() = with(binding) {
+    private fun setupObservers() {
         characterViewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
             resource ?: return@observe
             when (resource.statusEnum) {
@@ -69,7 +69,11 @@ class CharacterFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
-                return characterViewModel.loadingLiveData.value!!
+                with(characterViewModel.loadingLiveData.value) {
+                    if (this != null) {
+                        return this
+                    } else return false
+                }
             }
 
             override fun loadMoreItems() {
