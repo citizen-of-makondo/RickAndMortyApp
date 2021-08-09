@@ -77,7 +77,6 @@ class CharacterFragment : Fragment() {
             }
 
             override fun loadMoreItems() {
-                characterViewModel.loadingLiveData.value = true
                 getMoreItems()
             }
 
