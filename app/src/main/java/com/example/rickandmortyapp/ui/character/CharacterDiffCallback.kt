@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.ui.character
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.rickandmortyapp.model.Character
+import com.example.rickandmortyapp.data.model.Character
 
 class CharacterDiffCallback(
     var oldList: List<Character>,
