@@ -53,25 +53,4 @@
         android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintStart_toStartOf="@id/statusTextView"
         app:layout_constraintTop_toBottomOf="@id/statusTextView" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="189dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        tools:layout_editor_absoluteX="128dp"
-        tools:layout_editor_absoluteY="151dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

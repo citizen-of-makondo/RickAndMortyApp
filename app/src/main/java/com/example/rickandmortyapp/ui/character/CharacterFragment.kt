@@ -69,11 +69,7 @@ class CharacterFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
-                with(characterViewModel.loadingLiveData.value) {
-                    if (this != null) {
-                        return this
-                    } else return false
-                }
+                return characterViewModel.loadingLiveData.value ?: return false
             }
 
             override fun loadMoreItems() {
