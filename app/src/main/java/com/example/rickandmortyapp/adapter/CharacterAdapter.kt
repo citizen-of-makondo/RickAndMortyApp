@@ -32,6 +32,7 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
     }
 
     private val dataList = mutableListOf<Character>()
+    private var filteredDataList = mutableListOf<Character>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -52,5 +53,9 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
         dataList.clear()
         dataList.addAll(newList)
         characterDiffResult.dispatchUpdatesTo(this)
+    }
+
+    fun clear() {
+        dataList.clear()
     }
 }

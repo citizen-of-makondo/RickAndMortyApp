@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 class CharacterFilterFragment : Fragment() {
@@ -18,14 +20,23 @@ class CharacterFilterFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCharacterFilterBinding.inflate(inflater, container, false)
-        initViews(view)
         return binding.root
     }
 
-    private fun initViews(view: View?) {
-        val useFilterButton = binding.useFilter
-        useFilterButton.setOnClickListener {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
+    }
 
+    private fun initView(view: View?) {
+        binding.useFilter.setOnClickListener {
+            var filter: ArrayList<Filter> = arrayListOf()
+            filter = view?.let { CharacterFilterChipChecked().filterCharacter(view) }!!
+            val bundle = Bundle().apply {
+                putSerializable("bundleKey", filter)
+            }
+            setFragmentResult("requestKey", bundle)
+            findNavController().popBackStack()
         }
     }
 

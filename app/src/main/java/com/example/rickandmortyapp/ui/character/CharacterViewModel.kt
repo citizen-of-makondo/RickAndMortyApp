@@ -10,27 +10,73 @@ import kotlinx.coroutines.launch
 
 class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
-    private var pageNumber: Int = 1
+    private var pageNumberCharacterList: Int = 1
+    var pageNumberFilteredCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
-
+    var filterMap: MutableMap<String, String> = mutableMapOf()
     val loadingLiveData = MutableLiveData<Boolean>()
+    private var countAllPages = 1
 
     init {
-        getUsers()
+        getCharacterList()
     }
 
-    fun getUsers() {
+    fun getCharacterList() {
         viewModelScope.launch {
             try {
-                loadingLiveData.value = true
-                val oldList = charactersLiveData.value?.data.orEmpty()
-                charactersLiveData.value =
-                    LoadingStatus.success(data = oldList + mainRepository.getCharacters(pageNumber).results)
-                pageNumber++
-                loadingLiveData.value = false
+                if (filterMap.isNullOrEmpty() && pageNumberCharacterList <= countAllPages) {
+                    with(pageNumberCharacterList) {
+                        getCountPages(this)
+                        getData(this)
+                    }
+                } else {
+                    if (pageNumberFilteredCharacterList <= countAllPages) {
+                        with(filterMap) {
+                            getCountPages(this)
+                            getData(this)
+                        }
+                    }
+                }
             } catch (exception: Exception) {
                 LoadingStatus.error(data = null, message = exception.message ?: "Error Occurred!")
+                getCharacterList()
             }
         }
+    }
+
+    private suspend fun getCountPages(query: Any) {
+        countAllPages = when (query) {
+            is MutableMap<*, *> -> mainRepository.getPages(filterMap).info.pages
+            else -> mainRepository.getPages(pageNumberCharacterList).info.pages
+        }
+    }
+
+    private suspend fun getData(option: Any) {
+        loadingLiveData.value = true
+        when (option) {
+            is Int -> {
+                val oldList: List<Character> = charactersLiveData.value?.data.orEmpty()
+                charactersLiveData.value =
+                    LoadingStatus.success(data = oldList + mainRepository.getCharacters(
+                        pageNumberCharacterList).results)
+                pageNumberCharacterList++
+            }
+            is MutableMap<*, *> -> {
+                filterMap["page"] = pageNumberFilteredCharacterList.toString()
+                var oldList: List<Character> = listOf()
+                if (pageNumberFilteredCharacterList > 1) {
+                    oldList = charactersLiveData.value?.data.orEmpty()
+                }
+                charactersLiveData.value =
+                    LoadingStatus.success(data = oldList + mainRepository.getFilteredCharacters(
+                        filterMap).results)
+                with(filterMap) {
+                    remove("page")
+                    pageNumberFilteredCharacterList++
+                    put("page", "$pageNumberFilteredCharacterList")
+                }
+            }
+        }
+        loadingLiveData.value = false
     }
 }

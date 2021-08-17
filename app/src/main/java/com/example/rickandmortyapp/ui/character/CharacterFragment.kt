@@ -7,10 +7,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
+import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
@@ -23,6 +25,15 @@ class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
 
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener("requestKey") { requestKey, bundle ->
+            val result: ArrayList<Filter> = bundle.getSerializable("bundleKey") as ArrayList<Filter>
+            adapter.clear()
+            MainRepository.sendFilterFromArrayListToMap(result, characterViewModel)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +88,7 @@ class CharacterFragment : Fragment() {
             }
 
             private fun getMoreItems() {
-                characterViewModel.getUsers()
+                characterViewModel.getCharacterList()
             }
         })
     }
@@ -110,10 +121,19 @@ class CharacterFragment : Fragment() {
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
+
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        if (it.length > 2) {
+                            val queryList: ArrayList<Filter> = arrayListOf()
+                            queryList.add(Filter.Name(it))
+                            MainRepository.sendFilterFromArrayListToMap(queryList,
+                                characterViewModel)
+                        }
+                    }
                     return true
                 }
             })
