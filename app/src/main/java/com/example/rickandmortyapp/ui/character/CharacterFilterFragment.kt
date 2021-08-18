@@ -14,7 +14,7 @@ class CharacterFilterFragment : Fragment() {
     private var _binding: FragmentCharacterFilterBinding? = null
 
     private val binding get() = _binding!!
-    var filter: ArrayList<Filter> = arrayListOf()
+    private var filter: ArrayList<Filter> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +34,22 @@ class CharacterFilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view)
-        CharacterFilterChipChecked().filterCharacter(view, filter)
+        initView(view, filter)
     }
 
-    private fun initView(view: View?) {
+    private fun initView(view: View?, filter: ArrayList<Filter>) {
         binding.useFilter.setOnClickListener {
-            filter = view?.let { CharacterFilterChipChecked().filterCharacter(view, filter) }!!
+            this.filter = view?.let { CharacterFilterChipChecked().filterCharacter(view,
+                this.filter) }!!
             val bundle = Bundle().apply {
-                putSerializable("bundlefromFilterToViewKey", filter)
+                putSerializable("bundleFromFilterToViewKey", this@CharacterFilterFragment.filter)
             }
             setFragmentResult("fromFilterToViewKey", bundle)
             findNavController().popBackStack()
+        }
+        if (!filter.isNullOrEmpty()) {
+            view?.let { CharacterFilterChipChecked().setColorBackgroundToCheckedChip(it,
+                this.filter) }
         }
     }
 

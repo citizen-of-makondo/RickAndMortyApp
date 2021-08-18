@@ -31,7 +31,7 @@ class CharacterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener("fromFilterToViewKey") { requestKey, bundle ->
-            filter = bundle.getSerializable("bundlefromFilterToViewKey") as ArrayList<Filter>
+            filter = bundle.getSerializable("bundleFromFilterToViewKey") as ArrayList<Filter>
             adapter.clear()
             MainRepository.sendFilterFromArrayListToMap(filter, characterViewModel)
         }

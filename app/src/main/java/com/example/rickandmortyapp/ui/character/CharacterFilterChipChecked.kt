@@ -1,25 +1,16 @@
 package com.example.rickandmortyapp.ui.character
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.view.View
+import android.widget.Toast
 import com.example.rickandmortyapp.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import java.util.*
 
 class CharacterFilterChipChecked {
 
     fun filterCharacter(view: View, filter: ArrayList<Filter>): ArrayList<Filter> {
-        if (!filter.isNullOrEmpty()) {
-            for (item in filter) {
-                when(item)
-                {
-                    is Filter.Status -> setColorStatusChipGroup(view, item)
-                    is Filter.Gender -> setColorGenderChipGroup(view)
-                    is Filter.Species -> setColorSpeciesChipGroup(view)
-                }
-            }
-        }
         val filterList: ArrayList<Filter> = arrayListOf()
         val status = checkStatus(view)
         val gender = checkGender(view)
@@ -86,7 +77,23 @@ class CharacterFilterChipChecked {
     @SuppressLint("ResourceAsColor")
     private fun setColorStatusChipGroup(view: View, item: Filter.Status) {
         val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        val chip:Chip = view.findViewsWithText(arrayPotentinalView, item.value, View.FIND_VIEWS_WITH_TEXT) as Chip
-        chip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
+        with(arrayPotentinalView) {
+            add(view.findViewById(R.id.status_alive))
+            add(view.findViewById(R.id.status_dead))
+            add(view.findViewById(R.id.status_unknown))
+        }
+
+        val chip: Chip = view.findViewsWithText(arrayPotentinalView,
+            item.value,
+            View.FIND_VIEWS_WITH_TEXT) as Chip
+        Toast.makeText(view.context, "Выбран чип ${chip.text}", Toast.LENGTH_SHORT).show()
+    }
+
+    fun setColorBackgroundToCheckedChip(view: View, filter: ArrayList<Filter>) {
+        for (item in filter) {
+            if (item is Filter.Status) setColorStatusChipGroup(view, item)
+            if (item is Filter.Gender) setColorGenderChipGroup(view)
+            if (item is Filter.Species) setColorSpeciesChipGroup(view)
+        }
     }
 }
