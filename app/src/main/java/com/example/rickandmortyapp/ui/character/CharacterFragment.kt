@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,13 +26,14 @@ class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
 
     private val binding get() = _binding!!
+    var filter: ArrayList<Filter> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            val result: ArrayList<Filter> = bundle.getSerializable("bundleKey") as ArrayList<Filter>
+        setFragmentResultListener("fromFilterToViewKey") { requestKey, bundle ->
+            filter = bundle.getSerializable("bundlefromFilterToViewKey") as ArrayList<Filter>
             adapter.clear()
-            MainRepository.sendFilterFromArrayListToMap(result, characterViewModel)
+            MainRepository.sendFilterFromArrayListToMap(filter, characterViewModel)
         }
     }
 
@@ -121,7 +123,6 @@ class CharacterFragment : Fragment() {
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-
                     return false
                 }
 
@@ -132,6 +133,13 @@ class CharacterFragment : Fragment() {
                             queryList.add(Filter.Name(it))
                             MainRepository.sendFilterFromArrayListToMap(queryList,
                                 characterViewModel)
+                        } else {
+                            with(characterViewModel) {
+                                filterMap.clear()
+                                pageNumberCharacterList = 1
+                                charactersLiveData.value = null
+                                getCharacterList()
+                            }
                         }
                     }
                     return true
@@ -141,6 +149,10 @@ class CharacterFragment : Fragment() {
     }
 
     fun filterCharacterNavigation(item: MenuItem) {
+        val bundle = Bundle().apply {
+            putSerializable("bundleFromViewToFilterKey", filter)
+        }
+        setFragmentResult("fromViewToFilterKey", bundle)
         Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
             .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
     }

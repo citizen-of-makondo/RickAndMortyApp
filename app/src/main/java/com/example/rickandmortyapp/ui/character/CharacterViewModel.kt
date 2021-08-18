@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
-    private var pageNumberCharacterList: Int = 1
+    var pageNumberCharacterList: Int = 1
     var pageNumberFilteredCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
     var filterMap: MutableMap<String, String> = mutableMapOf()
