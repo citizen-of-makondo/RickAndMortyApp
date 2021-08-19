@@ -1,15 +1,14 @@
 package com.example.rickandmortyapp.ui.character
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.view.View
-import android.widget.Toast
 import com.example.rickandmortyapp.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import java.util.*
 
 class CharacterFilterChipChecked {
-
     fun filterCharacter(view: View, filter: ArrayList<Filter>): ArrayList<Filter> {
         val filterList: ArrayList<Filter> = arrayListOf()
         val status = checkStatus(view)
@@ -66,34 +65,33 @@ class CharacterFilterChipChecked {
         }
     }
 
-    private fun setColorSpeciesChipGroup(view: View) {
-
-    }
-
-    private fun setColorGenderChipGroup(view: View) {
-
+    @SuppressLint("ResourceAsColor")
+    fun setColorSpeciesChipGroup(view: View, item: Filter.Species) {
+        val arrayPotentinalView: ArrayList<View> = arrayListOf()
+        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
+            item.value,
+            View.FIND_VIEWS_WITH_TEXT)
+        val checkedChip = arrayPotentinalView.first() as Chip
+        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
     }
 
     @SuppressLint("ResourceAsColor")
-    private fun setColorStatusChipGroup(view: View, item: Filter.Status) {
+    fun setColorGenderChipGroup(view: View, item: Filter.Gender) {
         val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        with(arrayPotentinalView) {
-            add(view.findViewById(R.id.status_alive))
-            add(view.findViewById(R.id.status_dead))
-            add(view.findViewById(R.id.status_unknown))
-        }
-
-        val chip: Chip = view.findViewsWithText(arrayPotentinalView,
+        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
             item.value,
-            View.FIND_VIEWS_WITH_TEXT) as Chip
-        Toast.makeText(view.context, "Выбран чип ${chip.text}", Toast.LENGTH_SHORT).show()
+            View.FIND_VIEWS_WITH_TEXT)
+        val checkedChip = arrayPotentinalView.first() as Chip
+        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
     }
 
-    fun setColorBackgroundToCheckedChip(view: View, filter: ArrayList<Filter>) {
-        for (item in filter) {
-            if (item is Filter.Status) setColorStatusChipGroup(view, item)
-            if (item is Filter.Gender) setColorGenderChipGroup(view)
-            if (item is Filter.Species) setColorSpeciesChipGroup(view)
-        }
+    @SuppressLint("ResourceAsColor")
+    fun setColorStatusChipGroup(view: View, item: Filter.Status) {
+        val arrayPotentinalView: ArrayList<View> = arrayListOf()
+        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
+            item.value,
+            View.FIND_VIEWS_WITH_TEXT)
+        val checkedChip = arrayPotentinalView.first() as Chip
+        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
     }
 }

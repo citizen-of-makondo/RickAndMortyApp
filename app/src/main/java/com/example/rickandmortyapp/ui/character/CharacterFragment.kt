@@ -1,13 +1,14 @@
 package com.example.rickandmortyapp.ui.character
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -148,13 +149,15 @@ class CharacterFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ResourceType")
     fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = Bundle().apply {
-            putSerializable("bundleFromViewToFilterKey", filter)
-        }
-        setFragmentResult("fromViewToFilterKey", bundle)
+        val bundle = bundleOf("bundleFromViewToFilterKey" to filter)
+     //   setFragmentResult("fromViewToFilterKey", bundle)
+        val action = CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment()
+        /*Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
+            .navigate(action)*/
         Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
-            .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
+            .navigate(R.id.characterFilterFragment, bundle)
     }
 
     override fun onDestroyView() {
