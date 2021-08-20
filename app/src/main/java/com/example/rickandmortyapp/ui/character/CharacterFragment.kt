@@ -1,6 +1,5 @@
 package com.example.rickandmortyapp.ui.character
 
-import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
@@ -14,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
-import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
@@ -25,16 +23,18 @@ class CharacterFragment : Fragment() {
 
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
-
     private val binding get() = _binding!!
     var filter: ArrayList<Filter> = arrayListOf()
 
+    private val requestKey = "fromFilterToViewKey"
+    private val bundleFromFilterFragmentKey = "bundleFromFilterToViewKey"
+    private val bundleToFilterFragmentKey = "bundleFromViewToFilterKey"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener("fromFilterToViewKey") { requestKey, bundle ->
-            filter = bundle.getSerializable("bundleFromFilterToViewKey") as ArrayList<Filter>
-            adapter.clear()
-            MainRepository.sendFilterFromArrayListToMap(filter, characterViewModel)
+        setFragmentResultListener(requestKey) { requestKey, bundle ->
+            filter = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
+            SendFilterFromArrayListToMap.sendFilterFromArrayListToMap(filter, characterViewModel)
         }
     }
 
@@ -129,19 +129,7 @@ class CharacterFragment : Fragment() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     newText?.let {
-                        if (it.length > 2) {
-                            val queryList: ArrayList<Filter> = arrayListOf()
-                            queryList.add(Filter.Name(it))
-                            MainRepository.sendFilterFromArrayListToMap(queryList,
-                                characterViewModel)
-                        } else {
-                            with(characterViewModel) {
-                                filterMap.clear()
-                                pageNumberCharacterList = 1
-                                charactersLiveData.value = null
-                                getCharacterList()
-                            }
-                        }
+                        characterViewModel.searchCharactersByName(newText)
                     }
                     return true
                 }
@@ -149,15 +137,12 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    @SuppressLint("ResourceType")
-    fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = bundleOf("bundleFromViewToFilterKey" to filter)
-     //   setFragmentResult("fromViewToFilterKey", bundle)
-        val action = CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment()
-        /*Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
-            .navigate(action)*/
-        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
-            .navigate(R.id.characterFilterFragment, bundle)
+    private fun filterCharacterNavigation(item: MenuItem) {
+        val bundle = bundleOf(bundleToFilterFragmentKey to filter)
+        view?.let {
+            Navigation.findNavController(it)
+                .navigate(R.id.characterFilterFragment, bundle)
+        }
     }
 
     override fun onDestroyView() {

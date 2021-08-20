@@ -3,24 +3,28 @@
     <string name="title_location">Locations</string>
     <string name="title_episode">Episodes</string>
     <string name="title_characters">Characters</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="choose_status">Choose status</string>
-    <string name="alive">Alive</string>
-    <string name="dead">Dead</string>
+    <string name="status_alive">Alive</string>
+    <string name="status_dead">Dead</string>
+
     <string name="choose_gender">Choose gender</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="genderless">Genderless</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_genderless">Genderless</string>
+
     <string name="choose_specie">Choose specie</string>
-    <string name="human">Human</string>
-    <string name="alien">Alien</string>
-    <string name="humanoid">Humanoid</string>
-    <string name="poopybutthole">Poopybutthole</string>
-    <string name="mythological">Mythological</string>
-    <string name="animal">Animal</string>
-    <string name="robot">Robot</string>
-    <string name="disease">Disease</string>
+    <string name="specie_human">Human</string>
+    <string name="specie_alien">Alien</string>
+    <string name="specie_humanoid">Humanoid</string>
+    <string name="specie_poopybutthole">Poopybutthole</string>
+    <string name="specie_mythological">Mythological</string>
+    <string name="specie_animal">Animal</string>
+    <string name="specie_robot">Robot</string>
+    <string name="specie_disease">Disease</string>
+    <string name="specie_cronenberg">Cronenberg</string>
+    <string name="specie_planet">Planet</string>
+
     <string name="use_filters">Use filters</string>
     <string name="character_s_image">Character\'s image</string>
     <string name="name">Name</string>
@@ -28,7 +32,6 @@
     <string name="status">Status</string>
     <string name="specie">Specie</string>
     <string name="choose_type">Choose type</string>
-    <string name="planet">Planet</string>
     <string name="cluster">Cluster</string>
     <string name="space_station">Space Station</string>
     <string name="customs">Customs</string>
@@ -45,7 +48,6 @@
     <string name="k_83">K-83</string>
     <string name="testicle_monster">Testicle Monster</string>
     <string name="_5_126">5-126</string>
-    <string name="cronenberg">Cronenberg</string>
     <string name="post_apocalyptic">Post-Apocalyptic</string>
     <string name="fantasy">Fantasy</string>
     <string name="choose_dimension">Choose dimension</string>
@@ -96,4 +98,7 @@
     <string name="merged">Merged</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
+    <string name="clear_filters">Clear filters</string>
+    <string name="dimension_cronenberg">Cronenberg</string>
+    <string name="location_planet">Planet</string>
 </resources>

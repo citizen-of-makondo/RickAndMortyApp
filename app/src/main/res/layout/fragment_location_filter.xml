@@ -40,7 +40,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/planet" />
+                android:text="@string/location_planet" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_cluster"
@@ -335,7 +335,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cronenberg" />
+                android:text="@string/dimension_cronenberg" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/location_fantasy"

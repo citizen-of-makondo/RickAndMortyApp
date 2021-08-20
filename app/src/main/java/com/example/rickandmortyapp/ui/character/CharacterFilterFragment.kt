@@ -10,18 +10,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 class CharacterFilterFragment : Fragment() {
+    private val bundleFromCharacterFragmentKey = "bundleFromViewToFilterKey"
+    private val bundleToChatacterFragmentKey = "bundleFromFilterToViewKey"
+    private val requestKey = "fromFilterToViewKey"
     private var _binding: FragmentCharacterFilterBinding? = null
-
     private val binding get() = _binding!!
-    private var filter: ArrayList<Filter> = arrayListOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        /*setFragmentResultListener("fromViewToFilterKey") { requestKey, bundle ->
-            filter = arguments?.getSerializable("bundleFromViewToFilterKey") as ArrayList<Filter>
-            //filter = bundle.getSerializable("bundleFromViewToFilterKey") as ArrayList<Filter>
-        }*/
-    }
+    private var filter: ArrayList<Filter> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,31 +29,42 @@ class CharacterFilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filter = arguments?.getSerializable("bundleFromViewToFilterKey") as ArrayList<Filter>
+        filter = arguments?.getSerializable(bundleFromCharacterFragmentKey) as ArrayList<Filter>
         initView(view, filter)
     }
 
-    private fun initView(view: View?, filter: ArrayList<Filter>) {
-        binding.useFilter.setOnClickListener {
-            this.filter = view?.let {
-                CharacterFilterChipChecked().filterCharacter(view,
-                    this.filter)
-            }!!
-            val bundle = Bundle().apply {
-                putSerializable("bundleFromFilterToViewKey", this@CharacterFilterFragment.filter)
-            }
-            setFragmentResult("fromFilterToViewKey", bundle)
+    private fun initView(view: View, filter: ArrayList<Filter>) = with(binding) {
+        useFilter.setOnClickListener {
+            putFilterInBundle(view)
+            findNavController().popBackStack()
+        }
+        clearFilter.setOnClickListener {
+            filter.clear()
+            putFilterInBundle(view)
             findNavController().popBackStack()
         }
         if (!filter.isNullOrEmpty()) {
-            view?.let {
-                for (item in filter) {
-                    if (item is Filter.Status) CharacterFilterChipChecked().setColorStatusChipGroup(binding.statusGroup, item)
-                    if (item is Filter.Gender) CharacterFilterChipChecked().setColorGenderChipGroup(binding.genderGroup, item)
-                    if (item is Filter.Species) CharacterFilterChipChecked().setColorSpeciesChipGroup(binding.specieGroup, item)
-                }
+            for (item in filter) {
+                if (item is Filter.Status) CharacterFilterChipChecked().setColorStatusChipGroup(
+                    statusGroup,
+                    item)
+                if (item is Filter.Gender) CharacterFilterChipChecked().setColorGenderChipGroup(
+                    genderGroup,
+                    item)
+                if (item is Filter.Species) CharacterFilterChipChecked().setColorSpeciesChipGroup(
+                    specieGroup,
+                    item)
             }
         }
+    }
+
+    fun putFilterInBundle(view: View) {
+        filter =
+            CharacterFilterChipChecked().checkAllChipGroupAndFillFilter(view)
+        val bundle = Bundle().apply {
+            putSerializable(bundleToChatacterFragmentKey, filter)
+        }
+        setFragmentResult(requestKey, bundle)
     }
 
     override fun onDestroyView() {

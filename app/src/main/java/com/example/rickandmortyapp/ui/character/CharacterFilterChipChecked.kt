@@ -1,7 +1,5 @@
 package com.example.rickandmortyapp.ui.character
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.view.View
 import com.example.rickandmortyapp.R
 import com.google.android.material.chip.Chip
@@ -9,11 +7,11 @@ import com.google.android.material.chip.ChipGroup
 import java.util.*
 
 class CharacterFilterChipChecked {
-    fun filterCharacter(view: View, filter: ArrayList<Filter>): ArrayList<Filter> {
+    fun checkAllChipGroupAndFillFilter(view: View): ArrayList<Filter> {
         val filterList: ArrayList<Filter> = arrayListOf()
-        val status = checkStatus(view)
-        val gender = checkGender(view)
-        val specie = checkSpecie(view)
+        val status = getStatusChipGroupChecked(view)
+        val gender = getGenderChipGroupChecked(view)
+        val specie = getSpecieChipGroupChecked(view)
         status?.let {
             filterList.add(Filter.Status(it))
         }
@@ -26,72 +24,69 @@ class CharacterFilterChipChecked {
         return filterList
     }
 
-    private fun checkStatus(view: View): String? {
+    private fun getStatusChipGroupChecked(view: View): String? {
         val chipGroupStatus = view.findViewById<ChipGroup>(R.id.status_group)
         return when (chipGroupStatus.checkedChipId) {
-            R.id.status_alive -> "Alive"
-            R.id.status_dead -> "Dead"
-            R.id.status_unknown -> "Unknown"
+            R.id.status_alive -> "alive"
+            R.id.status_dead -> view.context.getString(R.string.status_dead)
+            R.id.status_unknown -> view.context.getString(R.string.unknown)
             else -> null
         }
     }
 
-    private fun checkGender(view: View): String? {
+    private fun getGenderChipGroupChecked(view: View): String? {
         val chipGroupGender = view.findViewById<ChipGroup>(R.id.gender_group)
         return when (chipGroupGender.checkedChipId) {
-            R.id.gender_male -> "Male"
-            R.id.gender_female -> "Female"
-            R.id.gender_genderless -> "Genderless"
-            R.id.gender_unknown -> "Unknown"
+            R.id.gender_male -> view.context.getString(R.string.gender_male)
+            R.id.gender_female -> view.context.getString(R.string.gender_female)
+            R.id.gender_genderless -> view.context.getString(R.string.gender_genderless)
+            R.id.gender_unknown -> view.context.getString(R.string.unknown)
             else -> null
         }
     }
 
-    private fun checkSpecie(view: View): String? {
+    private fun getSpecieChipGroupChecked(view: View): String? {
         val chipGroupSpecie = view.findViewById<ChipGroup>(R.id.specie_group)
         return when (chipGroupSpecie.checkedChipId) {
-            R.id.specie_human -> "Human"
-            R.id.specie_alien -> "Alien"
-            R.id.specie_humanoid -> "Humanoid"
-            R.id.specie_poopybutthole -> "Poopybutthole"
-            R.id.specie_mythological -> "Mythological"
-            R.id.specie_animal -> "Animal"
-            R.id.specie_robot -> "Robot"
-            R.id.specie_cronenberg -> "Cronenberg"
-            R.id.specie_disease -> "Disease"
-            R.id.specie_planet -> "Planet"
-            R.id.specie_unknown -> "Unknown"
+            R.id.specie_human -> view.context.getString(R.string.specie_human)
+            R.id.specie_alien -> view.context.getString(R.string.specie_alien)
+            R.id.specie_humanoid -> view.context.getString(R.string.specie_humanoid)
+            R.id.specie_poopybutthole -> view.context.getString(R.string.specie_poopybutthole)
+            R.id.specie_mythological -> view.context.getString(R.string.specie_mythological)
+            R.id.specie_animal -> view.context.getString(R.string.specie_animal)
+            R.id.specie_robot -> view.context.getString(R.string.specie_robot)
+            R.id.specie_cronenberg -> view.context.getString(R.string.specie_cronenberg)
+            R.id.specie_disease -> view.context.getString(R.string.specie_disease)
+            R.id.specie_planet -> view.context.getString(R.string.specie_planet)
+            R.id.specie_unknown -> view.context.getString(R.string.unknown)
             else -> null
         }
     }
 
-    @SuppressLint("ResourceAsColor")
     fun setColorSpeciesChipGroup(view: View, item: Filter.Species) {
         val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
+        view.findViewsWithText(arrayPotentinalView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.black)
     }
 
-    @SuppressLint("ResourceAsColor")
     fun setColorGenderChipGroup(view: View, item: Filter.Gender) {
         val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
+        view.findViewsWithText(arrayPotentinalView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.black)
     }
 
-    @SuppressLint("ResourceAsColor")
     fun setColorStatusChipGroup(view: View, item: Filter.Status) {
         val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        val chip: Unit = view.findViewsWithText(arrayPotentinalView,
+        view.findViewsWithText(arrayPotentinalView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.chipBackgroundColor = ColorStateList.valueOf(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.black)
     }
 }

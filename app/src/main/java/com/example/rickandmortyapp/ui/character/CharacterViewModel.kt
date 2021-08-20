@@ -11,11 +11,9 @@ import kotlinx.coroutines.launch
 class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
     var pageNumberCharacterList: Int = 1
-    var pageNumberFilteredCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
     var filterMap: MutableMap<String, String> = mutableMapOf()
     val loadingLiveData = MutableLiveData<Boolean>()
-    private var countAllPages = 1
 
     init {
         getCharacterList()
@@ -24,19 +22,9 @@ class CharacterViewModel(val mainRepository: MainRepository) :
     fun getCharacterList() {
         viewModelScope.launch {
             try {
-                if (filterMap.isNullOrEmpty() && pageNumberCharacterList <= countAllPages) {
-                    with(pageNumberCharacterList) {
-                        getCountPages(this)
-                        getData(this)
-                    }
-                } else {
-                    if (pageNumberFilteredCharacterList <= countAllPages) {
-                        with(filterMap) {
-                            getCountPages(this)
-                            getData(this)
-                        }
-                    }
-                }
+                loadingLiveData.value = true
+                getData()
+                loadingLiveData.value = false
             } catch (exception: Exception) {
                 LoadingStatus.error(data = null, message = exception.message ?: "Error Occurred!")
                 getCharacterList()
@@ -44,39 +32,36 @@ class CharacterViewModel(val mainRepository: MainRepository) :
         }
     }
 
-    private suspend fun getCountPages(query: Any) {
-        countAllPages = when (query) {
-            is MutableMap<*, *> -> mainRepository.getPages(filterMap).info.pages
-            else -> mainRepository.getPages(pageNumberCharacterList).info.pages
+    private suspend fun getData() {
+        val hasNextPage: String? = mainRepository.getCharacters(filterMap).info.hasNext
+        hasNextPage?.let {
+            filterMap["page"] = pageNumberCharacterList.toString()
+            var oldList: List<Character> = listOf()
+            if (pageNumberCharacterList > 1) {
+                oldList = charactersLiveData.value?.data.orEmpty()
+            }
+            charactersLiveData.value =
+                LoadingStatus.success(data = oldList + mainRepository.getCharacters(
+                    filterMap).results)
+            with(filterMap) {
+                remove("page")
+                pageNumberCharacterList++
+                put("page", "$pageNumberCharacterList")
+            }
         }
     }
 
-    private suspend fun getData(option: Any) {
-        loadingLiveData.value = true
-        when (option) {
-            is Int -> {
-                val oldList: List<Character> = charactersLiveData.value?.data.orEmpty()
-                charactersLiveData.value =
-                    LoadingStatus.success(data = oldList + mainRepository.getCharacters(
-                        pageNumberCharacterList).results)
-                pageNumberCharacterList++
-            }
-            is MutableMap<*, *> -> {
-                filterMap["page"] = pageNumberFilteredCharacterList.toString()
-                var oldList: List<Character> = listOf()
-                if (pageNumberFilteredCharacterList > 1) {
-                    oldList = charactersLiveData.value?.data.orEmpty()
-                }
-                charactersLiveData.value =
-                    LoadingStatus.success(data = oldList + mainRepository.getFilteredCharacters(
-                        filterMap).results)
-                with(filterMap) {
-                    remove("page")
-                    pageNumberFilteredCharacterList++
-                    put("page", "$pageNumberFilteredCharacterList")
-                }
+    fun searchCharactersByName(newText: String) {
+        if (newText.length > 2) {
+            val queryList: ArrayList<Filter> = arrayListOf()
+            queryList.add(Filter.Name(newText))
+            SendFilterFromArrayListToMap.sendFilterFromArrayListToMap(queryList, this)
+        } else {
+            with(this) {
+                filterMap.clear()
+                pageNumberCharacterList = 1
+                getCharacterList()
             }
         }
-        loadingLiveData.value = false
     }
 }

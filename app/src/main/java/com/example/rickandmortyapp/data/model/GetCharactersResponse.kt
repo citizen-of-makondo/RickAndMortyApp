@@ -10,8 +10,8 @@ data class GetCharactersResponse(
 )
 
 data class Info(
-    @SerializedName("pages")
-    val pages: Int
+    @SerializedName("next")
+    val hasNext: String?,
 )
 
 data class Character(
