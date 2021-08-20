@@ -69,7 +69,7 @@ class CharacterFilterChipChecked {
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.setChipBackgroundColorResource(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
     fun setColorGenderChipGroup(view: View, item: Filter.Gender) {
@@ -78,7 +78,7 @@ class CharacterFilterChipChecked {
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.setChipBackgroundColorResource(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
     fun setColorStatusChipGroup(view: View, item: Filter.Status) {
@@ -87,6 +87,6 @@ class CharacterFilterChipChecked {
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
         val checkedChip = arrayPotentinalView.first() as Chip
-        checkedChip.setChipBackgroundColorResource(R.color.black)
+        checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 }
