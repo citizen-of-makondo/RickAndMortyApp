@@ -27,7 +27,7 @@ class CharacterFilterChipChecked {
     private fun getStatusChipGroupChecked(view: View): String? {
         val chipGroupStatus = view.findViewById<ChipGroup>(R.id.status_group)
         return when (chipGroupStatus.checkedChipId) {
-            R.id.status_alive -> "alive"
+            R.id.status_alive -> view.context.getString(R.string.status_alive)
             R.id.status_dead -> view.context.getString(R.string.status_dead)
             R.id.status_unknown -> view.context.getString(R.string.unknown)
             else -> null
