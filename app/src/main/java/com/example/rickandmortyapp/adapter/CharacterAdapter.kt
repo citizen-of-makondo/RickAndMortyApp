@@ -53,8 +53,4 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
         dataList.addAll(newList)
         characterDiffResult.dispatchUpdatesTo(this)
     }
-
-    fun clear() {
-        dataList.clear()
-    }
 }

@@ -5,5 +5,5 @@ import com.example.rickandmortyapp.model.CharacterService
 
 class MainRepository(private val apiService: CharacterService) {
     suspend fun getCharacters(filterMap: MutableMap<String, String>): GetCharactersResponse =
-        apiService.getFilteredList(filterMap)
+        apiService.getCharacterList(filterMap)
 }
