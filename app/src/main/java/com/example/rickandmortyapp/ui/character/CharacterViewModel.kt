@@ -7,13 +7,16 @@ import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.concurrent.schedule
 
 class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
     var pageNumberCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
-    var filterMap: ArrayList<Filter> = arrayListOf()
+    var filterList: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
+    private var countAllPages = 1
 
     init {
         getCharacterList()
@@ -33,28 +36,38 @@ class CharacterViewModel(val mainRepository: MainRepository) :
     }
 
     private suspend fun getData() {
-        val hasNextPage: String? = mainRepository.getCharacters(filterMap).info.nextPageLink
-        hasNextPage?.let {
-            filterMap.add(Filter.Page(pageNumberCharacterList))
-            var oldList: List<Character> = charactersLiveData.value?.data.orEmpty()
+        if (pageNumberCharacterList <= countAllPages) {
+            val data = mainRepository.getCharacters(filterList)
+            countAllPages = data.info.pages
+            var nextPageLink = data.info.next
+            var oldList: List<Character> = listOf()
+            if (pageNumberCharacterList > 1) {
+                oldList = charactersLiveData.value?.data.orEmpty()
+            }
             charactersLiveData.value =
-                LoadingStatus.success(data = oldList + mainRepository.getCharacters(
-                    filterMap).results)
-            with(filterMap) {
+                LoadingStatus.success(data = oldList + data.results)
+            with(filterList) {
                 remove(Filter.Page(pageNumberCharacterList))
-                pageNumberCharacterList++
-                filterMap.add(Filter.Page(pageNumberCharacterList))
+                filterList.add(Filter.Page(++pageNumberCharacterList))
             }
         }
     }
 
     fun searchCharactersByName(newText: String) {
         if (newText.length > 2) {
-            val queryList: ArrayList<Filter> = arrayListOf(Filter.Name(newText))
-            Mapping.sendFilterFromArrayListToMap(queryList)
+            filterList.remove(Filter.Name(newText))
+            Timer("SearchingByName", false).schedule(1000) {
+                pageNumberCharacterList = 1
+                with(filterList) {
+                    remove(Filter.Page(pageNumberCharacterList))
+                    add(Filter.Name(newText))
+                    add(Filter.Page(1))
+                }
+                getCharacterList()
+            }
         } else {
             with(this) {
-                filterMap.clear()
+                filterList.clear()
                 pageNumberCharacterList = 1
                 getCharacterList()
             }

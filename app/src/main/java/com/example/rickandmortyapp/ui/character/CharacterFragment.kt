@@ -3,7 +3,6 @@ package com.example.rickandmortyapp.ui.character
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -31,7 +30,12 @@ class CharacterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(requestKeyFromFilter) { requestKey, bundle ->
-            characterViewModel.filterMap = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
+            with(characterViewModel) {
+                filterList = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
+                charactersLiveData.value = null
+                pageNumberCharacterList = 1
+                getCharacterList()
+            }
         }
     }
 
@@ -62,10 +66,14 @@ class CharacterFragment : Fragment() {
                 LoadStatusEnum.SUCCESS -> {
                     resource.data?.let {
                         adapter.updateData(it)
+                        if (it.isNullOrEmpty()) {
+                            binding.characterList.visibility = View.GONE
+                            binding.noResultsTextView.visibility = View.VISIBLE
+                        }
                     }
                 }
                 LoadStatusEnum.ERROR -> {
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
+                    binding.noResultsTextView.setText(getString(R.string.error))
                 }
             }
         }
@@ -112,7 +120,7 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    fun searchCharacter(item: MenuItem) {
+    private fun searchCharacter(item: MenuItem) {
         val manager =
             requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
         (item.actionView as SearchView).apply {
@@ -135,7 +143,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = bundleOf(bundleToFilterFragmentKey to characterViewModel.filterMap)
+        val bundle = bundleOf(bundleToFilterFragmentKey to characterViewModel.filterList)
         view?.let {
             Navigation.findNavController(it)
                 .navigate(R.id.characterFilterFragment, bundle)

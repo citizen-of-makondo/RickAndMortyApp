@@ -10,8 +10,10 @@ data class GetCharactersResponse(
 )
 
 data class Info(
+    @SerializedName("pages")
+    val pages: Int,
     @SerializedName("next")
-    val nextPageLink: String?,
+    val next: String?
 )
 
 data class Character(

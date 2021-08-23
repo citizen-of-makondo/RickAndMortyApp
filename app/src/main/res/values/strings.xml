@@ -101,4 +101,6 @@
     <string name="clear_filters">Clear filters</string>
     <string name="dimension_cronenberg">Cronenberg</string>
     <string name="location_planet">Planet</string>
+    <string name="no_results">No results</string>
+    <string name="error">Error</string>
 </resources>
