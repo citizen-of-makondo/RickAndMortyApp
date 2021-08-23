@@ -12,7 +12,7 @@ class CharacterViewModel(val mainRepository: MainRepository) :
     ViewModel() {
     var pageNumberCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
-    var filterMap: MutableMap<String, String> = mutableMapOf()
+    var filterMap: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
 
     init {
@@ -33,29 +33,25 @@ class CharacterViewModel(val mainRepository: MainRepository) :
     }
 
     private suspend fun getData() {
-        val hasNextPage: String? = mainRepository.getCharacters(filterMap).info.hasNext
+        val hasNextPage: String? = mainRepository.getCharacters(filterMap).info.nextPageLink
         hasNextPage?.let {
-            filterMap["page"] = pageNumberCharacterList.toString()
-            var oldList: List<Character> = listOf()
-            if (pageNumberCharacterList > 1) {
-                oldList = charactersLiveData.value?.data.orEmpty()
-            }
+            filterMap.add(Filter.Page(pageNumberCharacterList))
+            var oldList: List<Character> = charactersLiveData.value?.data.orEmpty()
             charactersLiveData.value =
                 LoadingStatus.success(data = oldList + mainRepository.getCharacters(
                     filterMap).results)
             with(filterMap) {
-                remove("page")
+                remove(Filter.Page(pageNumberCharacterList))
                 pageNumberCharacterList++
-                put("page", "$pageNumberCharacterList")
+                filterMap.add(Filter.Page(pageNumberCharacterList))
             }
         }
     }
 
     fun searchCharactersByName(newText: String) {
         if (newText.length > 2) {
-            val queryList: ArrayList<Filter> = arrayListOf()
-            queryList.add(Filter.Name(newText))
-            SendFilterFromArrayListToMap.sendFilterFromArrayListToMap(queryList, this)
+            val queryList: ArrayList<Filter> = arrayListOf(Filter.Name(newText))
+            Mapping.sendFilterFromArrayListToMap(queryList)
         } else {
             with(this) {
                 filterMap.clear()

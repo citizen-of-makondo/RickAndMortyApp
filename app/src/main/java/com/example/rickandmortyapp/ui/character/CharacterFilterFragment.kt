@@ -9,10 +9,11 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
+const val bundleToCharacterFragmentKey = "bundleFromFilterToViewKey"
+const val requestKeyFromFilter = "fromFilterToViewKey"
+const val bundleFromCharacterFragmentKey: String = "bundleFromViewToFilterKey"
+
 class CharacterFilterFragment : Fragment() {
-    private val bundleFromCharacterFragmentKey = "bundleFromViewToFilterKey"
-    private val bundleToChatacterFragmentKey = "bundleFromFilterToViewKey"
-    private val requestKey = "fromFilterToViewKey"
     private var _binding: FragmentCharacterFilterBinding? = null
     private val binding get() = _binding!!
 
@@ -62,9 +63,9 @@ class CharacterFilterFragment : Fragment() {
         filter =
             CharacterFilterChipChecked().checkAllChipGroupAndFillFilter(view)
         val bundle = Bundle().apply {
-            putSerializable(bundleToChatacterFragmentKey, filter)
+            putSerializable(bundleToCharacterFragmentKey, filter)
         }
-        setFragmentResult(requestKey, bundle)
+        setFragmentResult(requestKeyFromFilter, bundle)
     }
 
     override fun onDestroyView() {

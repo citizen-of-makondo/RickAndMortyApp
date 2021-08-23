@@ -10,4 +10,6 @@ sealed class Filter(val value: String) : Serializable {
     class Species(species: String) : Filter(species)
 
     class Name(name: String): Filter(name)
+
+    class Page(page: Int): Filter(page.toString())
 }

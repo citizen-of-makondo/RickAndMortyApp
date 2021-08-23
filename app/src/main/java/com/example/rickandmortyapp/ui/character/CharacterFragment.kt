@@ -18,23 +18,20 @@ import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+const val bundleFromFilterFragmentKey = "bundleFromFilterToViewKey"
+const val bundleToFilterFragmentKey = "bundleFromViewToFilterKey"
+
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
 
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
     private val binding get() = _binding!!
-    var filter: ArrayList<Filter> = arrayListOf()
-
-    private val requestKey = "fromFilterToViewKey"
-    private val bundleFromFilterFragmentKey = "bundleFromFilterToViewKey"
-    private val bundleToFilterFragmentKey = "bundleFromViewToFilterKey"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(requestKey) { requestKey, bundle ->
-            filter = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
-            SendFilterFromArrayListToMap.sendFilterFromArrayListToMap(filter, characterViewModel)
+        setFragmentResultListener(requestKeyFromFilter) { requestKey, bundle ->
+            characterViewModel.filterMap = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
         }
     }
 
@@ -138,7 +135,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = bundleOf(bundleToFilterFragmentKey to filter)
+        val bundle = bundleOf(bundleToFilterFragmentKey to characterViewModel.filterMap)
         view?.let {
             Navigation.findNavController(it)
                 .navigate(R.id.characterFilterFragment, bundle)

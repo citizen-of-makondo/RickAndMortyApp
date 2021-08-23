@@ -11,7 +11,7 @@ data class GetCharactersResponse(
 
 data class Info(
     @SerializedName("next")
-    val hasNext: String?,
+    val nextPageLink: String?,
 )
 
 data class Character(
