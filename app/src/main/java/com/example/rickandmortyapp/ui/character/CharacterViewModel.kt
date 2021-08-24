@@ -30,7 +30,6 @@ class CharacterViewModel(val mainRepository: MainRepository) :
                 loadingLiveData.value = false
             } catch (exception: Exception) {
                 LoadingStatus.error(data = null, message = exception.message ?: "Error Occurred!")
-                getCharacterList()
             }
         }
     }
@@ -39,7 +38,6 @@ class CharacterViewModel(val mainRepository: MainRepository) :
         if (pageNumberCharacterList <= countAllPages) {
             val data = mainRepository.getCharacters(filterList)
             countAllPages = data.info.pages
-            var nextPageLink = data.info.next
             var oldList: List<Character> = listOf()
             if (pageNumberCharacterList > 1) {
                 oldList = charactersLiveData.value?.data.orEmpty()
@@ -66,11 +64,14 @@ class CharacterViewModel(val mainRepository: MainRepository) :
                 getCharacterList()
             }
         } else {
-            with(this) {
-                filterList.clear()
-                pageNumberCharacterList = 1
-                getCharacterList()
-            }
+            filterList.clear()
+            pageNumberCharacterList = 1
+            getCharacterList()
         }
+    }
+
+    fun setPageAndGetData() {
+        pageNumberCharacterList = 1
+        getCharacterList()
     }
 }

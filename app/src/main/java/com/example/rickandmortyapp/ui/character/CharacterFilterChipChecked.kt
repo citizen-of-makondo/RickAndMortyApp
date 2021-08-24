@@ -21,6 +21,7 @@ class CharacterFilterChipChecked {
         specie?.let {
             filterList.add(Filter.Species(it))
         }
+        filterList.add(Filter.Page(1))
         return filterList
     }
 

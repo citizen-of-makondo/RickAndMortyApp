@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.ui.character
 
 object Mapping {
-    fun sendFilterFromArrayListToMap(result: ArrayList<Filter>): MutableMap<String, String> {
+    fun mappingArrayListToMap(result: ArrayList<Filter>): MutableMap<String, String> {
         val filterMap: MutableMap<String, String> = mutableMapOf()
         for (item in result) {
             when (item) {

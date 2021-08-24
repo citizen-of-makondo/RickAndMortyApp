@@ -17,8 +17,7 @@ import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-const val bundleFromFilterFragmentKey = "bundleFromFilterToViewKey"
-const val bundleToFilterFragmentKey = "bundleFromViewToFilterKey"
+const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
@@ -29,13 +28,9 @@ class CharacterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(requestKeyFromFilter) { requestKey, bundle ->
-            with(characterViewModel) {
-                filterList = bundle.getSerializable(bundleFromFilterFragmentKey) as ArrayList<Filter>
-                charactersLiveData.value = null
-                pageNumberCharacterList = 1
-                getCharacterList()
-            }
+        setFragmentResultListener(REQUEST_FILTER_KEY) { requestKey, bundle ->
+                characterViewModel.filterList = bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
+                characterViewModel.setPageAndGetData()
         }
     }
 
@@ -143,7 +138,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = bundleOf(bundleToFilterFragmentKey to characterViewModel.filterList)
+        val bundle = bundleOf(BUNDLE_FILTER_KEY to characterViewModel.filterList)
         view?.let {
             Navigation.findNavController(it)
                 .navigate(R.id.characterFilterFragment, bundle)

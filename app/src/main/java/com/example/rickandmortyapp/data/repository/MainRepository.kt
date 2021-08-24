@@ -7,7 +7,7 @@ import com.example.rickandmortyapp.ui.character.Mapping
 
 class MainRepository(private val apiService: CharacterService) {
     suspend fun getCharacters(filter: ArrayList<Filter>): GetCharactersResponse {
-        val filterMap = Mapping.sendFilterFromArrayListToMap(filter)
+        val filterMap = Mapping.mappingArrayListToMap(filter)
         return apiService.getCharacterList(filterMap)
     }
 }
