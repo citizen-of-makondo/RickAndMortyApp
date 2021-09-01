@@ -6,16 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 const val REQUEST_FILTER_KEY = "fromFilterToViewKey"
+const val REQUEST_CHARACTER_KEY = "fromViewToFilterKey"
 
 class CharacterFilterFragment : Fragment() {
     private var _binding: FragmentCharacterFilterBinding? = null
     private val binding get() = _binding!!
 
-    private var filter: ArrayList<Filter> = arrayListOf()
+    var filterList: ArrayList<Filter> = arrayListOf()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(REQUEST_CHARACTER_KEY) { _, bundle ->
+            filterList = bundle.getSerializable(BUNDLE_CHARACTER_KEY) as ArrayList<Filter>
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,27 +32,27 @@ class CharacterFilterFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCharacterFilterBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filter = arguments?.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
-        initView(view, filter)
+        initView(view)
     }
 
-    private fun initView(view: View, filter: ArrayList<Filter>) = with(binding) {
+    private fun initView(view: View) = with(binding) {
         useFilter.setOnClickListener {
             putFilterInBundle(view)
             findNavController().popBackStack()
         }
         clearFilter.setOnClickListener {
-            filter.clear()
+            filterList.clear()
             putFilterInBundle(view)
             findNavController().popBackStack()
         }
-        if (!filter.isNullOrEmpty()) {
-            for (item in filter) {
+        if (!filterList.isNullOrEmpty()) {
+            for (item in filterList) {
                 if (item is Filter.Status) CharacterFilterChipChecked().setColorStatusChipGroup(
                     statusGroup,
                     item)
@@ -57,12 +66,11 @@ class CharacterFilterFragment : Fragment() {
         }
     }
 
-    fun putFilterInBundle(view: View) {
-        filter =
+    private fun putFilterInBundle(view: View) {
+        val filter =
             CharacterFilterChipChecked().checkAllChipGroupAndFillFilter(view)
-        val bundle = Bundle().apply {
-            putSerializable(BUNDLE_FILTER_KEY, filter)
-        }
+        val bundle = Bundle()
+        bundle.putSerializable(BUNDLE_FILTER_KEY, filter)
         setFragmentResult(REQUEST_FILTER_KEY, bundle)
     }
 

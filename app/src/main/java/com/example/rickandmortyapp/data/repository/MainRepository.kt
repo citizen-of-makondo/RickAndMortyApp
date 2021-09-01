@@ -6,8 +6,8 @@ import com.example.rickandmortyapp.ui.character.Filter
 import com.example.rickandmortyapp.ui.character.Mapping
 
 class MainRepository(private val apiService: CharacterService) {
-    suspend fun getCharacters(filter: ArrayList<Filter>): GetCharactersResponse {
-        val filterMap = Mapping.mappingArrayListToMap(filter)
-        return apiService.getCharacterList(filterMap)
+    suspend fun getCharacters(pageNumberCharacterList: Int, filter: ArrayList<Filter>): GetCharactersResponse {
+        val filterMap = Mapping.mapFilterListToQueryMap(filter)
+        return apiService.getCharacterList(pageNumberCharacterList, filterMap)
     }
 }

@@ -8,7 +8,7 @@ import java.util.*
 
 class CharacterFilterChipChecked {
     fun checkAllChipGroupAndFillFilter(view: View): ArrayList<Filter> {
-        val filterList: ArrayList<Filter> = arrayListOf()
+        val filterList = arrayListOf<Filter>()
         val status = getStatusChipGroupChecked(view)
         val gender = getGenderChipGroupChecked(view)
         val specie = getSpecieChipGroupChecked(view)
@@ -21,7 +21,6 @@ class CharacterFilterChipChecked {
         specie?.let {
             filterList.add(Filter.Species(it))
         }
-        filterList.add(Filter.Page(1))
         return filterList
     }
 
@@ -65,29 +64,29 @@ class CharacterFilterChipChecked {
     }
 
     fun setColorSpeciesChipGroup(view: View, item: Filter.Species) {
-        val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        view.findViewsWithText(arrayPotentinalView,
+        val arrayPotentialView: ArrayList<View> = arrayListOf()
+        view.findViewsWithText(arrayPotentialView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
-        val checkedChip = arrayPotentinalView.first() as Chip
+        val checkedChip = arrayPotentialView.first() as Chip
         checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
     fun setColorGenderChipGroup(view: View, item: Filter.Gender) {
-        val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        view.findViewsWithText(arrayPotentinalView,
+        val arrayPotentialView: ArrayList<View> = arrayListOf()
+        view.findViewsWithText(arrayPotentialView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
-        val checkedChip = arrayPotentinalView.first() as Chip
+        val checkedChip = arrayPotentialView.first() as Chip
         checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
     fun setColorStatusChipGroup(view: View, item: Filter.Status) {
-        val arrayPotentinalView: ArrayList<View> = arrayListOf()
-        view.findViewsWithText(arrayPotentinalView,
+        val arrayPotentialView: ArrayList<View> = arrayListOf()
+        view.findViewsWithText(arrayPotentialView,
             item.value,
             View.FIND_VIEWS_WITH_TEXT)
-        val checkedChip = arrayPotentinalView.first() as Chip
+        val checkedChip = arrayPotentialView.first() as Chip
         checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 }

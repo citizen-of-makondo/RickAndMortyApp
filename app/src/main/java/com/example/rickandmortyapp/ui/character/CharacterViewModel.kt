@@ -8,15 +8,15 @@ import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.concurrent.schedule
 
-class CharacterViewModel(val mainRepository: MainRepository) :
-    ViewModel() {
+class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel() {
     var pageNumberCharacterList: Int = 1
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
     var filterList: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
     private var countAllPages = 1
+    private var isNeedSafeOldList = false
+    private val timer = Timer()
 
     init {
         getCharacterList()
@@ -35,43 +35,39 @@ class CharacterViewModel(val mainRepository: MainRepository) :
     }
 
     private suspend fun getData() {
-        if (pageNumberCharacterList <= countAllPages) {
-            val data = mainRepository.getCharacters(filterList)
-            countAllPages = data.info.pages
-            var oldList: List<Character> = listOf()
-            if (pageNumberCharacterList > 1) {
-                oldList = charactersLiveData.value?.data.orEmpty()
-            }
-            charactersLiveData.value =
-                LoadingStatus.success(data = oldList + data.results)
-            with(filterList) {
-                remove(Filter.Page(pageNumberCharacterList))
-                filterList.add(Filter.Page(++pageNumberCharacterList))
-            }
+        if (pageNumberCharacterList > countAllPages) {
+            return
         }
+        val data = mainRepository.getCharacters(pageNumberCharacterList, filterList)
+        countAllPages = data.info.pages
+        var oldList: List<Character> = listOf()
+        if (isNeedSafeOldList) {
+            oldList = charactersLiveData.value?.data as MutableList<Character>
+        }
+        charactersLiveData.value =
+            LoadingStatus.success(data = oldList + data.results)
+        isNeedSafeOldList = true
+        pageNumberCharacterList++
     }
+
+    var timerTask: TimerTask? = null
 
     fun searchCharactersByName(newText: String) {
         if (newText.length > 2) {
-            filterList.remove(Filter.Name(newText))
-            Timer("SearchingByName", false).schedule(1000) {
-                pageNumberCharacterList = 1
-                with(filterList) {
-                    remove(Filter.Page(pageNumberCharacterList))
-                    add(Filter.Name(newText))
-                    add(Filter.Page(1))
+            filterList.add(0, element = Filter.Name(newText))
+            timerTask?.cancel()
+            timerTask = object : TimerTask() {
+                override fun run() {
+                    setPageAndGetData()
                 }
-                getCharacterList()
             }
-        } else {
-            filterList.clear()
-            pageNumberCharacterList = 1
-            getCharacterList()
+            timer.schedule(timerTask, 1000)
         }
     }
 
     fun setPageAndGetData() {
         pageNumberCharacterList = 1
+        isNeedSafeOldList = false
         getCharacterList()
     }
 }

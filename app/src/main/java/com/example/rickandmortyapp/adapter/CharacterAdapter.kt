@@ -31,7 +31,7 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
         private val specieTextView = itemView.findViewById(R.id.specieTextView) as TextView
     }
 
-    private val dataList = mutableListOf<Character>()
+    var dataList = mutableListOf<Character>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -52,5 +52,9 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
         dataList.clear()
         dataList.addAll(newList)
         characterDiffResult.dispatchUpdatesTo(this)
+    }
+
+    fun clearData() {
+        dataList.clear()
     }
 }

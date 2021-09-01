@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,6 +18,7 @@ import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
+const val BUNDLE_CHARACTER_KEY = "bundleFromViewToFilterKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
@@ -28,9 +29,10 @@ class CharacterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(REQUEST_FILTER_KEY) { requestKey, bundle ->
-                characterViewModel.filterList = bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
-                characterViewModel.setPageAndGetData()
+        setFragmentResultListener(REQUEST_FILTER_KEY) { _, bundle ->
+            characterViewModel.filterList =
+                bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
+            characterViewModel.setPageAndGetData()
         }
     }
 
@@ -104,7 +106,7 @@ class CharacterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_menu -> {
-                filterCharacterNavigation(item)
+                filterCharacterNavigation()
                 true
             }
             R.id.search_menu -> {
@@ -137,11 +139,13 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private fun filterCharacterNavigation(item: MenuItem) {
-        val bundle = bundleOf(BUNDLE_FILTER_KEY to characterViewModel.filterList)
+    private fun filterCharacterNavigation() {
+        val bundle = Bundle()
+        bundle.putSerializable(BUNDLE_CHARACTER_KEY, characterViewModel.filterList)
+        setFragmentResult(REQUEST_CHARACTER_KEY, bundle)
         view?.let {
             Navigation.findNavController(it)
-                .navigate(R.id.characterFilterFragment, bundle)
+                .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
         }
     }
 
