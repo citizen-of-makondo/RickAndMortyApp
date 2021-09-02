@@ -96,6 +96,12 @@ class CharacterFragment : Fragment() {
                 characterViewModel.getCharacterList()
             }
         })
+
+        binding.resetFAB.setOnClickListener {
+            characterViewModel.filterList.clear()
+            characterViewModel.setPageAndGetData()
+            layoutManager.scrollToPosition(0)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -136,6 +142,11 @@ class CharacterFragment : Fragment() {
                     return true
                 }
             })
+
+            if (this.visibility == View.GONE) {
+                characterViewModel.filterList.clear()
+                characterViewModel.setPageAndGetData()
+            }
         }
     }
 

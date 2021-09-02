@@ -62,6 +62,7 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
                 }
             }
             timer.schedule(timerTask, 1000)
+            timer.purge()
         }
     }
 
