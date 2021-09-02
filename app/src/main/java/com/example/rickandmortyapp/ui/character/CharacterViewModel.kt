@@ -54,10 +54,10 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
 
     fun searchCharactersByName(newText: String) {
         if (newText.length > 2) {
-            filterList.add(0, element = Filter.Name(newText))
             timerTask?.cancel()
             timerTask = object : TimerTask() {
                 override fun run() {
+                    filterList.add(0, element = Filter.Name(newText))
                     setPageAndGetData()
                 }
             }

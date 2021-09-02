@@ -136,16 +136,20 @@ class CharacterFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let {
+                    if (newText.isNullOrEmpty()) {
+                        characterViewModel.filterList.clear()
+                        characterViewModel.setPageAndGetData()
+                    } else {
                         characterViewModel.searchCharactersByName(newText)
                     }
                     return true
                 }
             })
 
-            if (this.visibility == View.GONE) {
+            setOnCloseListener {
                 characterViewModel.filterList.clear()
                 characterViewModel.setPageAndGetData()
+                false
             }
         }
     }
