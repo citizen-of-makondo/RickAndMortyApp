@@ -17,6 +17,8 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
     private var countAllPages = 1
     private var isNeedSafeOldList = false
     private val timer = Timer()
+    private val timeOfDelay = 1000L
+    private val countLetterForSearching = 2
 
     init {
         getCharacterList()
@@ -53,7 +55,7 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
     var timerTask: TimerTask? = null
 
     fun searchCharactersByName(newText: String) {
-        if (newText.length > 2) {
+        if (newText.length > countLetterForSearching) {
             timerTask?.cancel()
             timerTask = object : TimerTask() {
                 override fun run() {
@@ -61,7 +63,7 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
                     setPageAndGetData()
                 }
             }
-            timer.schedule(timerTask, 1000)
+            timer.schedule(timerTask, timeOfDelay)
             timer.purge()
         }
     }
