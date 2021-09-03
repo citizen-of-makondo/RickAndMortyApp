@@ -103,4 +103,9 @@
     <string name="location_planet">Planet</string>
     <string name="no_results">No results</string>
     <string name="error">Error</string>
+    <string name="type">Type</string>
+    <string name="origin">Origin</string>
+    <string name="location">Location</string>
+    <string name="episode">Episode</string>
+    <string name="image_of_character">Image of character</string>
 </resources>
