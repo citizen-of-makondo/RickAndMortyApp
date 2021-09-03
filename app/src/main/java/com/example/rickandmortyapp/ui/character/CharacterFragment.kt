@@ -3,10 +3,11 @@ package com.example.rickandmortyapp.ui.character
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
@@ -16,13 +17,24 @@ import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
+const val BUNDLE_CHARACTER_KEY = "bundleFromViewToFilterKey"
+
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
 
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
-
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(REQUEST_FILTER_KEY) { _, bundle ->
+            characterViewModel.filterList =
+                bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
+            characterViewModel.setPageAndGetData()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +63,14 @@ class CharacterFragment : Fragment() {
                 LoadStatusEnum.SUCCESS -> {
                     resource.data?.let {
                         adapter.updateData(it)
+                        if (it.isNullOrEmpty()) {
+                            binding.characterList.visibility = View.GONE
+                            binding.noResultsTextView.visibility = View.VISIBLE
+                        }
                     }
                 }
                 LoadStatusEnum.ERROR -> {
-                    Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
+                    binding.noResultsTextView.setText(getString(R.string.error))
                 }
             }
         }
@@ -77,9 +93,15 @@ class CharacterFragment : Fragment() {
             }
 
             private fun getMoreItems() {
-                characterViewModel.getUsers()
+                characterViewModel.getCharacterList()
             }
         })
+
+        binding.resetFAB.setOnClickListener {
+            characterViewModel.filterList.clear()
+            characterViewModel.setPageAndGetData()
+            layoutManager.scrollToPosition(0)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -90,7 +112,7 @@ class CharacterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_menu -> {
-                filterCharacterNavigation(item)
+                filterCharacterNavigation()
                 true
             }
             R.id.search_menu -> {
@@ -101,7 +123,7 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    fun searchCharacter(item: MenuItem) {
+    private fun searchCharacter(item: MenuItem) {
         val manager =
             requireActivity().getSystemService(AppCompatActivity.SEARCH_SERVICE) as SearchManager
         (item.actionView as SearchView).apply {
@@ -114,15 +136,32 @@ class CharacterFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText.isNullOrEmpty()) {
+                        characterViewModel.filterList.clear()
+                        characterViewModel.setPageAndGetData()
+                    } else {
+                        characterViewModel.searchCharactersByName(newText)
+                    }
                     return true
                 }
             })
+
+            setOnCloseListener {
+                characterViewModel.filterList.clear()
+                characterViewModel.setPageAndGetData()
+                false
+            }
         }
     }
 
-    fun filterCharacterNavigation(item: MenuItem) {
-        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main)
-            .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
+    private fun filterCharacterNavigation() {
+        val bundle = Bundle()
+        bundle.putSerializable(BUNDLE_CHARACTER_KEY, characterViewModel.filterList)
+        setFragmentResult(REQUEST_CHARACTER_KEY, bundle)
+        view?.let {
+            Navigation.findNavController(it)
+                .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
+        }
     }
 
     override fun onDestroyView() {

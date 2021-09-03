@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_character_filter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingStart="8dp"
     android:paddingTop="4dp"
     android:paddingEnd="8dp"
-    android:id="@+id/frament_character_filter"
     tools:context=".ui.character.CharacterFilterFragment">
 
     <TextView
@@ -34,14 +34,14 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/alive" />
+            android:text="@string/status_alive" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/status_dead"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dead" />
+            android:text="@string/status_dead" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/status_unknown"
@@ -77,21 +77,21 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/male" />
+            android:text="@string/gender_male" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_female"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/female" />
+            android:text="@string/gender_female" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_genderless"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/genderless" />
+            android:text="@string/gender_genderless" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/gender_unknown"
@@ -126,21 +126,21 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/human" />
+            android:text="@string/specie_human" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_alien"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/alien" />
+            android:text="@string/specie_alien" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_humanoid"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/humanoid" />
+            android:text="@string/specie_humanoid" />
 
 
         <com.google.android.material.chip.Chip
@@ -148,7 +148,7 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/poopybutthole" />
+            android:text="@string/specie_poopybutthole" />
 
 
         <com.google.android.material.chip.Chip
@@ -156,7 +156,7 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mythological" />
+            android:text="@string/specie_mythological" />
 
 
         <com.google.android.material.chip.Chip
@@ -164,35 +164,35 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/animal" />
+            android:text="@string/specie_animal" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_robot"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/robot" />
+            android:text="@string/specie_robot" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_cronenberg"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cronenberg" />
+            android:text="@string/specie_cronenberg" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_disease"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/disease" />
+            android:text="@string/specie_disease" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_planet"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/planet" />
+            android:text="@string/specie_planet" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/specie_unknown"
@@ -209,7 +209,15 @@
         android:layout_marginBottom="8dp"
         android:text="@string/use_filters"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clear_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/clear_filters"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
