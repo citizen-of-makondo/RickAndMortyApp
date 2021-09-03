@@ -12,8 +12,15 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
-class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class CharacterAdapter(listener: OnListItemClickListener) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
+
+    interface OnListItemClickListener {
+        fun onItemClick(character: Character)
+    }
+
+    private val onListItemClickListener: OnListItemClickListener = listener
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(character: Character) {
             nameTextView.text = character.name
             genderTextView.text = character.gender
@@ -22,6 +29,10 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
             Glide.with(imageItemCharacter.context)
                 .load(character.image)
                 .into(imageItemCharacter)
+
+            itemView.setOnClickListener {
+                onListItemClickListener.onItemClick(character)
+            }
         }
 
         private val imageItemCharacter = itemView.findViewById(R.id.imageItemCharacter) as ImageView
