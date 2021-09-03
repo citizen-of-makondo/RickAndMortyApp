@@ -9,15 +9,17 @@ import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 import java.util.*
 
+const val timeOfDelay = 1000L
+const val countLetterForSearching = 2
+
 class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel() {
-    var pageNumberCharacterList: Int = 1
+    private val timer = Timer()
+    private var countAllPages = 1
+    private var pageNumberCharacterList: Int = 1
+    private var timerTask: TimerTask? = null
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
     var filterList: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
-    private var countAllPages = 1
-    private val timer = Timer()
-    private val timeOfDelay = 1000L
-    private val countLetterForSearching = 2
 
     init {
         getCharacterList()
@@ -49,8 +51,6 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
             LoadingStatus.success(data = oldList + data.results)
         pageNumberCharacterList++
     }
-
-    var timerTask: TimerTask? = null
 
     fun searchCharactersByName(newText: String) {
         if (newText.length > countLetterForSearching) {
