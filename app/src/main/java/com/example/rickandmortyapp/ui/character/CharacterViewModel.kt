@@ -15,7 +15,6 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
     var filterList: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
     private var countAllPages = 1
-    private var isNeedSafeOldList = false
     private val timer = Timer()
     private val timeOfDelay = 1000L
     private val countLetterForSearching = 2
@@ -43,12 +42,11 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
         val data = mainRepository.getCharacters(pageNumberCharacterList, filterList)
         countAllPages = data.info.pages
         var oldList: List<Character> = listOf()
-        if (isNeedSafeOldList) {
+        if (pageNumberCharacterList > 1) {
             oldList = charactersLiveData.value?.data as MutableList<Character>
         }
         charactersLiveData.value =
             LoadingStatus.success(data = oldList + data.results)
-        isNeedSafeOldList = true
         pageNumberCharacterList++
     }
 
@@ -70,7 +68,6 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
 
     fun setPageAndGetData() {
         pageNumberCharacterList = 1
-        isNeedSafeOldList = false
         getCharacterList()
     }
 }

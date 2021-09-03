@@ -6,14 +6,12 @@ data class GetCharactersResponse(
     @SerializedName("info")
     val info: Info,
     @SerializedName("results")
-    val results: List<Character>
+    val results: List<Character>,
 )
 
 data class Info(
     @SerializedName("pages")
     val pages: Int,
-    @SerializedName("next")
-    val next: String?
 )
 
 data class Character(
@@ -32,5 +30,5 @@ data class Character(
     @SerializedName("image")
     val image: String,
     @SerializedName("url")
-    val url: String
+    val url: String,
 )
