@@ -4,6 +4,7 @@ import com.example.rickandmortyapp.data.api.CharacterRetrofitBuilder
 import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.CharacterService
 import com.example.rickandmortyapp.ui.character.CharacterViewModel
+import com.example.rickandmortyapp.ui.character.characterDetail.CharacterDetailViewModel
 import com.example.rickandmortyapp.ui.episode.EpisodeViewModel
 import com.example.rickandmortyapp.ui.location.LocationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,6 +16,7 @@ val appModule = module {
     single { get<Retrofit>().create(CharacterService::class.java) }
     single { MainRepository(get()) }
     viewModel { CharacterViewModel(get()) }
+    viewModel { (characterID: Int) -> CharacterDetailViewModel(get(), characterID) }
     viewModel { EpisodeViewModel() }
     viewModel { LocationViewModel() }
 }
