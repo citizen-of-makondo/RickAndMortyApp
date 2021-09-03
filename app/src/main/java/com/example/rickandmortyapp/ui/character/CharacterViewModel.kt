@@ -18,8 +18,8 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
     private var pageNumberCharacterList: Int = 1
     private var timerTask: TimerTask? = null
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
-    var filterList: ArrayList<Filter> = arrayListOf()
     val loadingLiveData = MutableLiveData<Boolean>()
+    var filterList: ArrayList<Filter> = arrayListOf()
 
     init {
         getCharacterList()
