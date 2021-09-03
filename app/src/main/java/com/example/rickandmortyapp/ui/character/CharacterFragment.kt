@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -12,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
+import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
@@ -19,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
 const val BUNDLE_CHARACTER_KEY = "bundleFromViewToFilterKey"
+const val BUNDLE_CHARACTER_ID_KEY = "bundleCharacterIDKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
@@ -80,7 +83,11 @@ class CharacterFragment : Fragment() {
         val recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        adapter = CharacterAdapter()
+        adapter = CharacterAdapter(object : CharacterAdapter.OnListItemClickListener {
+            override fun onItemClick(character: Character) {
+                detailCharacterNavigation(character)
+            }
+        })
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -161,6 +168,14 @@ class CharacterFragment : Fragment() {
         view?.let {
             Navigation.findNavController(it)
                 .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
+        }
+    }
+
+    private fun detailCharacterNavigation(character: Character) {
+        val bundle = bundleOf(BUNDLE_CHARACTER_ID_KEY to character.id)
+        view?.let {
+            Navigation.findNavController(it)
+                .navigate(R.id.characterDetailFragment, bundle)
         }
     }
 
