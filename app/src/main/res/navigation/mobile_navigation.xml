@@ -14,11 +14,8 @@
             android:id="@+id/action_navigation_character_to_characterFilterFragment"
             app:destination="@id/characterFilterFragment" />
         <action
-            android:id="@+id/action_navigation_character_to_navigation2"
+            android:id="@+id/action_navigation_character_to_characterDetailFragment"
             app:destination="@id/characterDetailFragment" />
-        <action
-            android:id="@+id/action_navigation_character_to_characterDetailFragment3"
-            app:destination="@id/characterDetailFragment3" />
     </fragment>
 
     <fragment
@@ -37,18 +34,20 @@
         android:id="@+id/characterFilterFragment"
         android:name="com.example.rickandmortyapp.ui.character.CharacterFilterFragment"
         android:label="fragment_character_filter"
-        tools:layout="@layout/fragment_character_filter" />
-    <navigation android:id="@+id/characterDetailFragment"
-        app:startDestination="@id/characterDetailFragment2">
-        <fragment
-            android:id="@+id/characterDetailFragment2"
-            android:name="com.example.rickandmortyapp.ui.character.characterDetail.CharacterDetailFragment"
-            android:label="fragment_character_detail"
-            tools:layout="@layout/fragment_character_detail" />
-    </navigation>
+        tools:layout="@layout/fragment_character_filter" >
+        <argument
+            android:name="filter"
+            app:argType="com.example.rickandmortyapp.ui.character.Filter$FilterList" />
+    </fragment>
+
     <fragment
-        android:id="@+id/characterDetailFragment3"
+        android:id="@+id/characterDetailFragment"
         android:name="com.example.rickandmortyapp.ui.character.characterDetail.CharacterDetailFragment"
         android:label="fragment_character_detail"
-        tools:layout="@layout/fragment_character_detail" />
+        tools:layout="@layout/fragment_character_detail" >
+        <argument
+            android:name="characterID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
 </navigation>

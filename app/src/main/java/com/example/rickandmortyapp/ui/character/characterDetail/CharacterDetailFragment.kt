@@ -12,15 +12,21 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.GetCharacterDetailResponse
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
-import com.example.rickandmortyapp.ui.character.BUNDLE_CHARACTER_ID_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class CharacterDetailFragment : Fragment() {
-    private val characterDetailViewModel: CharacterDetailViewModel by viewModel(parameters = { parametersOf(arguments?.getInt(BUNDLE_CHARACTER_ID_KEY) as Int) })
+    private val characterDetailViewModel: CharacterDetailViewModel by viewModel(parameters = { parametersOf(characterId) })
 
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
+
+    private var characterId = 1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        characterId = CharacterDetailFragmentArgs.fromBundle(requireArguments()).characterID
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

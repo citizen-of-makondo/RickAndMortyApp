@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
@@ -21,9 +20,8 @@ class CharacterFilterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(REQUEST_CHARACTER_KEY) { _, bundle ->
-            filterList = bundle.getSerializable(BUNDLE_CHARACTER_KEY) as ArrayList<Filter>
-        }
+        val result = CharacterFilterFragmentArgs.fromBundle(requireArguments()).filter
+        filterList.addAll(result)
     }
 
     override fun onCreateView(

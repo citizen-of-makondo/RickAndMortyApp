@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
 const val BUNDLE_CHARACTER_KEY = "bundleFromViewToFilterKey"
 const val BUNDLE_CHARACTER_ID_KEY = "bundleCharacterIDKey"
+const val REQUEST_CHARACTER_ID_KEY = "requestCharacterIDKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
@@ -162,20 +161,23 @@ class CharacterFragment : Fragment() {
     }
 
     private fun filterCharacterNavigation() {
-        val bundle = Bundle()
-        bundle.putSerializable(BUNDLE_CHARACTER_KEY, characterViewModel.filterList)
-        setFragmentResult(REQUEST_CHARACTER_KEY, bundle)
         view?.let {
+            val filterList = Filter.FilterList()
+            filterList.addAll(characterViewModel.filterList)
+            val action =
+                CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment(
+                    filter = filterList)
             Navigation.findNavController(it)
-                .navigate(CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment())
+                .navigate(action)
         }
     }
 
     private fun detailCharacterNavigation(character: Character) {
-        val bundle = bundleOf(BUNDLE_CHARACTER_ID_KEY to character.id)
+        val action = CharacterFragmentDirections.actionNavigationCharacterToCharacterDetailFragment(
+            characterID = character.id)
         view?.let {
             Navigation.findNavController(it)
-                .navigate(R.id.characterDetailFragment, bundle)
+                .navigate(action)
         }
     }
 

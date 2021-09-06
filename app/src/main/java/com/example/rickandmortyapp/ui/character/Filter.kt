@@ -1,13 +1,21 @@
 package com.example.rickandmortyapp.ui.character
 
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-sealed class Filter(val value: String) : Serializable {
-    class Status(status: String) : Filter(status)
+sealed class Filter(val value: String) {
+    @Parcelize
+    class Status(val status: String) : Filter(status), Parcelable
 
-    class Gender(gender: String) : Filter(gender)
+    @Parcelize
+    class Gender(val gender: String) : Filter(gender), Parcelable
 
-    class Species(species: String) : Filter(species)
+    @Parcelize
+    class Species(val species: String) : Filter(species), Parcelable
 
-    class Name(name: String): Filter(name)
+    @Parcelize
+    class Name(val name: String) : Filter(name), Parcelable
+
+    @Parcelize
+    class FilterList: ArrayList<Filter>(), Parcelable
 }
