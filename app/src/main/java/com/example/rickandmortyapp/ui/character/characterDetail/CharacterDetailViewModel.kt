@@ -9,9 +9,13 @@ import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 
-class CharacterDetailViewModel constructor(private val mainRepository: MainRepository, val characterID: Int) :
+class CharacterDetailViewModel constructor(
+    private val mainRepository: MainRepository,
+    characterID: Int,
+) :
     ViewModel() {
     var characterDetailLiveData = MutableLiveData<LoadingStatus<GetCharacterDetailResponse>>()
+    val imageURL = MutableLiveData<String>()
 
     init {
         getCharacterDetail(characterID)
@@ -22,6 +26,7 @@ class CharacterDetailViewModel constructor(private val mainRepository: MainRepos
             try {
                 val data = mainRepository.getCharacterDetail(characterID)
                 characterDetailLiveData.value = LoadingStatus.success(data = data)
+                imageURL.value = data.image
             } catch (e: Exception) {
                 Log.e("Detail", "getCharacterDetail: ${e.message}")
             }

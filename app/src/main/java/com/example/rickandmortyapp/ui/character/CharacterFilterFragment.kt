@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 const val REQUEST_FILTER_KEY = "fromFilterToViewKey"
-const val REQUEST_CHARACTER_KEY = "fromViewToFilterKey"
 
 class CharacterFilterFragment : Fragment() {
     private var _binding: FragmentCharacterFilterBinding? = null
@@ -20,8 +19,7 @@ class CharacterFilterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val result = CharacterFilterFragmentArgs.fromBundle(requireArguments()).filter
-        filterList.addAll(result)
+        filterList.addAll(CharacterFilterFragmentArgs.fromBundle(requireArguments()).filter)
     }
 
     override fun onCreateView(

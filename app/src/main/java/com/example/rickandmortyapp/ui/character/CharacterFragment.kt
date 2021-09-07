@@ -18,9 +18,6 @@ import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
-const val BUNDLE_CHARACTER_KEY = "bundleFromViewToFilterKey"
-const val BUNDLE_CHARACTER_ID_KEY = "bundleCharacterIDKey"
-const val REQUEST_CHARACTER_ID_KEY = "requestCharacterIDKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()

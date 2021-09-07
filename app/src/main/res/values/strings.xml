@@ -107,5 +107,13 @@
     <string name="origin">Origin</string>
     <string name="location">Location</string>
     <string name="episode">Episode</string>
+
     <string name="image_of_character">Image of character</string>
+    <string name="name_detail">Name:</string>
+    <string name="status_detail">Status:</string>
+    <string name="specie_detail">Specie:</string>
+    <string name="type_detail">Type:</string>
+    <string name="gender_detail">Gender:</string>
+    <string name="origin_detail">Origin:</string>
+    <string name="location_detail">Location:</string>
 </resources>
