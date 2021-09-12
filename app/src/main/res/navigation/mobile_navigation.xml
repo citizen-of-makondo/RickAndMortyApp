@@ -49,5 +49,37 @@
             android:name="characterID"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_characterDetailFragment_to_locationDetailFragment"
+            app:destination="@id/locationDetailFragment" />
+        <action
+            android:id="@+id/action_characterDetailFragment_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDetailFragment"
+        android:name="com.example.rickandmortyapp.ui.location.locationDetail.LocationDetailFragment"
+        android:label="fragment_location_detail"
+        tools:layout="@layout/fragment_location_detail" >
+        <action
+            android:id="@+id/action_locationDetailFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+        <argument
+            android:name="locationID"
+            app:argType="integer"
+            android:defaultValue="1" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="com.example.rickandmortyapp.ui.episode.episodeDetail.EpisodeDetailFragment"
+        android:label="fragment_episode_detail"
+        tools:layout="@layout/fragment_episode_detail" >
+        <action
+            android:id="@+id/action_episodeDetailFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+        <argument
+            android:name="episodeID"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
 </navigation>

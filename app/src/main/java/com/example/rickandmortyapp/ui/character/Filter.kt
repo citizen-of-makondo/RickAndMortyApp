@@ -4,17 +4,13 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 sealed class Filter(val value: String) {
-    @Parcelize
-    class Status(val status: String) : Filter(status), Parcelable
+    class Status(val status: String) : Filter(status)
 
-    @Parcelize
-    class Gender(val gender: String) : Filter(gender), Parcelable
+    class Gender(val gender: String) : Filter(gender)
 
-    @Parcelize
-    class Species(val species: String) : Filter(species), Parcelable
+    class Species(val species: String) : Filter(species)
 
-    @Parcelize
-    class Name(val name: String) : Filter(name), Parcelable
+    class Name(val name: String) : Filter(name)
 
     @Parcelize
     class FilterList: ArrayList<Filter>(), Parcelable

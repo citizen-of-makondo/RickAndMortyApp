@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -34,11 +35,30 @@ class CharacterDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
+        setupUI()
+    }
+
+    private fun setupUI() {
+        binding.locationCharacterDetail.setOnClickListener {
+            detailLocationDirection()
+        }
     }
 
     private fun setupObserver() {
         characterDetailViewModel.characterDetailLiveData.observe(viewLifecycleOwner) { resources ->
             resources ?: return@observe
+        }
+    }
+
+    private fun detailLocationDirection() {
+        val locationID =
+            characterDetailViewModel.characterDetailLiveData.value?.data?.location?.url?.split("/".toRegex())
+                ?.last()?.toInt()
+        locationID?.let {
+            val action =
+                CharacterDetailFragmentDirections.actionCharacterDetailFragmentToLocationDetailFragment(
+                    locationID = locationID)
+            view?.let { view -> Navigation.findNavController(view).navigate(action) }
         }
     }
 

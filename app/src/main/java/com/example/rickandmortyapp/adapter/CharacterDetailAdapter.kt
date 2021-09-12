@@ -11,7 +11,7 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.GetCharacterDetailResponse
 
 class CharacterDetailAdapter : RecyclerView.Adapter<CharacterDetailAdapter.ViewHolder>() {
-    inner class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
+    class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         fun bind(data: GetCharacterDetailResponse) {
             nameTextView.text = data.name
             genderTextView.text = data.gender

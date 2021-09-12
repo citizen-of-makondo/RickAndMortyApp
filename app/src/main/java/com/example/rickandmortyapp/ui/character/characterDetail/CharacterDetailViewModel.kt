@@ -28,7 +28,7 @@ class CharacterDetailViewModel constructor(
                 characterDetailLiveData.value = LoadingStatus.success(data = data)
                 imageURL.value = data.image
             } catch (e: Exception) {
-                Log.e("Detail", "getCharacterDetail: ${e.message}")
+                Log.e("CharacterDetail", "getCharacterDetail: ${e.message}")
             }
         }
     }

@@ -116,4 +116,6 @@
     <string name="gender_detail">Gender:</string>
     <string name="origin_detail">Origin:</string>
     <string name="location_detail">Location:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
