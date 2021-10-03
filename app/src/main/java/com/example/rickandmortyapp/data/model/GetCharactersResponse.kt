@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class GetCharactersResponse(
     @SerializedName("info")
-    val info: Info,
+    val episodeCharacterInfo: CharacterInfo,
     @SerializedName("results")
     val results: List<Character>
 )
 
-data class Info(
+data class CharacterInfo(
     @SerializedName("pages")
     val pages: Int
 )

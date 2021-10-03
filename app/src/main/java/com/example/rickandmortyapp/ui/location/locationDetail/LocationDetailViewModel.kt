@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmortyapp.data.model.GetLocationDetailRespone
 import com.example.rickandmortyapp.data.repository.MainRepository
-import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 
 class LocationDetailViewModel constructor(
     private val mainRepository: MainRepository,
     locationID: Int,
 ) : ViewModel() {
-    var locationDetailLiveData = MutableLiveData<LoadingStatus<GetLocationDetailRespone>>()
+    var locationDetailLiveData = MutableLiveData<GetLocationDetailRespone>()
 
     init {
         getLocationDetail(locationID)
@@ -23,7 +22,7 @@ class LocationDetailViewModel constructor(
         viewModelScope.launch {
             try {
                 val data = mainRepository.getLocationDetail(locationID)
-                locationDetailLiveData.value = LoadingStatus.success(data = data)
+                locationDetailLiveData.value = data
             } catch (e: Exception) {
                 Log.e("LocationDetail", "getLocationDetail: ${e.message}")
             }

@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.name}"
+            android:text="@{viewmodel.characterDetailLiveData.name}"
             app:layout_constraintBottom_toBottomOf="@id/nameCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/nameCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@+id/nameCharacterDetailTextView" />
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.status}"
+            android:text="@{viewmodel.characterDetailLiveData.status}"
             app:layout_constraintBottom_toBottomOf="@id/statusCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/statusCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/statusCharacterDetailTextView" />
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.species}"
+            android:text="@{viewmodel.characterDetailLiveData.species}"
             app:layout_constraintBottom_toBottomOf="@id/specieCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/specieCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/specieCharacterDetailTextView" />
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.type}"
+            android:text="@{viewmodel.characterDetailLiveData.type}"
             app:layout_constraintBottom_toBottomOf="@id/typeCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/typeCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/typeCharacterDetailTextView" />
@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.gender}"
+            android:text="@{viewmodel.characterDetailLiveData.gender}"
             app:layout_constraintBottom_toBottomOf="@id/genderCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/genderCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/genderCharacterDetailTextView" />
@@ -134,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.origin.name}"
+            android:text="@{viewmodel.characterDetailLiveData.origin.name}"
             app:layout_constraintBottom_toBottomOf="@id/originCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/originCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/originCharacterDetailTextView" />
@@ -153,9 +153,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_detail_character"
-            android:text="@{viewmodel.characterDetailLiveData.data.location.name}"
+            android:text="@{viewmodel.characterDetailLiveData.location.name}"
             app:layout_constraintBottom_toBottomOf="@id/locationCharacterDetailTextView"
             app:layout_constraintStart_toEndOf="@id/locationCharacterDetailTextView"
             app:layout_constraintTop_toTopOf="@id/locationCharacterDetailTextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/episodeRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/locationCharacterDetailTextView"
+            app:layout_constraintTop_toBottomOf="@id/locationCharacterDetailTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

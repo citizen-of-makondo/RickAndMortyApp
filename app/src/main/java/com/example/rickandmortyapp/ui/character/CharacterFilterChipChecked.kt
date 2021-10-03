@@ -7,19 +7,19 @@ import com.google.android.material.chip.ChipGroup
 import java.util.*
 
 class CharacterFilterChipChecked {
-    fun checkAllChipGroupAndFillFilter(view: View): ArrayList<Filter> {
-        val filterList = arrayListOf<Filter>()
+    fun checkAllChipGroupAndFillFilter(view: View): ArrayList<CharacterFilter> {
+        val filterList = arrayListOf<CharacterFilter>()
         val status = getStatusChipGroupChecked(view)
         val gender = getGenderChipGroupChecked(view)
         val specie = getSpecieChipGroupChecked(view)
         status?.let {
-            filterList.add(Filter.Status(it))
+            filterList.add(CharacterFilter.Status(it))
         }
         gender?.let {
-            filterList.add(Filter.Gender(it))
+            filterList.add(CharacterFilter.Gender(it))
         }
         specie?.let {
-            filterList.add(Filter.Species(it))
+            filterList.add(CharacterFilter.Species(it))
         }
         return filterList
     }
@@ -63,7 +63,7 @@ class CharacterFilterChipChecked {
         }
     }
 
-    fun setColorSpeciesChipGroup(view: View, item: Filter.Species) {
+    fun setColorSpeciesChipGroup(view: View, item: CharacterFilter.Species) {
         val arrayPotentialView: ArrayList<View> = arrayListOf()
         view.findViewsWithText(arrayPotentialView,
             item.value,
@@ -72,7 +72,7 @@ class CharacterFilterChipChecked {
         checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
-    fun setColorGenderChipGroup(view: View, item: Filter.Gender) {
+    fun setColorGenderChipGroup(view: View, item: CharacterFilter.Gender) {
         val arrayPotentialView: ArrayList<View> = arrayListOf()
         view.findViewsWithText(arrayPotentialView,
             item.value,
@@ -81,7 +81,7 @@ class CharacterFilterChipChecked {
         checkedChip.setChipBackgroundColorResource(R.color.dark_green)
     }
 
-    fun setColorStatusChipGroup(view: View, item: Filter.Status) {
+    fun setColorStatusChipGroup(view: View, item: CharacterFilter.Status) {
         val arrayPotentialView: ArrayList<View> = arrayListOf()
         view.findViewsWithText(arrayPotentialView,
             item.value,

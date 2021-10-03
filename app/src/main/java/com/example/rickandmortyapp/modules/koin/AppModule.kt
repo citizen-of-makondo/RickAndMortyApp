@@ -19,8 +19,8 @@ val appModule = module {
     single { MainRepository(get()) }
     viewModel { CharacterViewModel(get()) }
     viewModel { (characterID: Int) -> CharacterDetailViewModel(get(), characterID) }
-    viewModel { (locationID: Int) -> LocationDetailViewModel(get(), locationID) }
+    viewModel { EpisodeViewModel(get()) }
     viewModel { (episodeID: Int) -> EpisodeDetailViewModel(get(), episodeID) }
-    viewModel { EpisodeViewModel() }
     viewModel { LocationViewModel() }
+    viewModel { (locationID: Int) -> LocationDetailViewModel(get(), locationID) }
 }

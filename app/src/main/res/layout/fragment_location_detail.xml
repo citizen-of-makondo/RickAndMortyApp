@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginTop="24dp"
-            android:text="@{viewmodel.locationDetailLiveData.data.name}"
+            android:text="@{viewmodel.locationDetailLiveData.name}"
             android:textSize="@dimen/textsize_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@{viewmodel.locationDetailLiveData.data.type}"
+            android:text="@{viewmodel.locationDetailLiveData.type}"
             android:textSize="@dimen/textsize_24"
             app:layout_constraintBottom_toBottomOf="@+id/typeLocationDetailTextView"
             app:layout_constraintStart_toEndOf="@+id/typeLocationDetailTextView"
@@ -65,11 +65,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:singleLine="false"
-            android:text="@{viewmodel.locationDetailLiveData.data.dimension}"
+            android:text="@{viewmodel.locationDetailLiveData.dimension}"
             android:textSize="@dimen/textsize_24"
             app:layout_constraintBottom_toBottomOf="@+id/dimensionLocationDetailTextView"
             app:layout_constraintStart_toEndOf="@+id/dimensionLocationDetailTextView"
             app:layout_constraintTop_toTopOf="@+id/dimensionLocationDetailTextView" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

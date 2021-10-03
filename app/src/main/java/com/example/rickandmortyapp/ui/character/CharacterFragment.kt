@@ -28,8 +28,8 @@ class CharacterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(REQUEST_FILTER_KEY) { _, bundle ->
-            characterViewModel.filterList =
-                bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<Filter>
+            characterViewModel.characterFilterList =
+                bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<CharacterFilter>
             characterViewModel.setPageAndGetData()
         }
     }
@@ -96,7 +96,7 @@ class CharacterFragment : Fragment() {
         })
 
         binding.resetFAB.setOnClickListener {
-            characterViewModel.filterList.clear()
+            characterViewModel.characterFilterList.clear()
             characterViewModel.setPageAndGetData()
             layoutManager.scrollToPosition(0)
         }
@@ -135,7 +135,7 @@ class CharacterFragment : Fragment() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText.isNullOrEmpty()) {
-                        characterViewModel.filterList.clear()
+                        characterViewModel.characterFilterList.clear()
                         characterViewModel.setPageAndGetData()
                     } else {
                         characterViewModel.searchCharactersByName(newText)
@@ -145,7 +145,7 @@ class CharacterFragment : Fragment() {
             })
 
             setOnCloseListener {
-                characterViewModel.filterList.clear()
+                characterViewModel.characterFilterList.clear()
                 characterViewModel.setPageAndGetData()
                 false
             }
@@ -154,8 +154,8 @@ class CharacterFragment : Fragment() {
 
     private fun filterCharacterNavigation() {
         view?.let {
-            val filterList = Filter.FilterList()
-            filterList.addAll(characterViewModel.filterList)
+            val filterList = CharacterFilter.FilterList()
+            filterList.addAll(characterViewModel.characterFilterList)
             val action =
                 CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment(
                     filter = filterList)

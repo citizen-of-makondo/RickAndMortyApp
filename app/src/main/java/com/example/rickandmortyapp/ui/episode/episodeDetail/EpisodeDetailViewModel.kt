@@ -4,16 +4,15 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmortyapp.data.model.GetEpisodeDetailResponse
+import com.example.rickandmortyapp.data.model.Episode
 import com.example.rickandmortyapp.data.repository.MainRepository
-import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
 
 class EpisodeDetailViewModel(
     private val mainRepository: MainRepository,
     episodeID: Int,
 ) : ViewModel() {
-    var episodeDetailLiveData = MutableLiveData<LoadingStatus<GetEpisodeDetailResponse>>()
+    var episodeDetailLiveData = MutableLiveData<Episode>()
 
     init {
         getEpisodeDetail(episodeID)
@@ -22,8 +21,8 @@ class EpisodeDetailViewModel(
     private fun getEpisodeDetail(episodeID: Int) {
         viewModelScope.launch {
             try {
-                val data = mainRepository.getEposideDetail(episodeID)
-                episodeDetailLiveData.value = LoadingStatus.success(data = data)
+                val data = mainRepository.getEpisodeDetail(episodeID.toString())
+                episodeDetailLiveData.value = data
             } catch (e: Exception) {
                 Log.e("EpisodeDetail", "getEpisodeDetail: ${e.message}")
             }

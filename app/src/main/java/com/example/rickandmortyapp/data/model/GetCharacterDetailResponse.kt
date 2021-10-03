@@ -22,7 +22,7 @@ data class GetCharacterDetailResponse(
     @SerializedName("origin")
     val origin: Origin,
     @SerializedName("episode")
-    val episode: Array<String>
+    val episode: List<String>
 )
 
 data class Origin(

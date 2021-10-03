@@ -3,8 +3,20 @@ package com.example.rickandmortyapp.data.model
 import com.google.gson.annotations.SerializedName
 
 data class GetEpisodeDetailResponse(
-    @SerializedName("airDate")
-    val air_date: String,
+    @SerializedName("results")
+    val results: List<Episode>,
+    @SerializedName("info")
+    val info: EpisodeInfo
+)
+
+data class EpisodeInfo(
+    @SerializedName("pages")
+    val pages: Int
+)
+
+data class Episode(
+    @SerializedName("air_date")
+    val airDate: String,
     @SerializedName("characters")
     val characters: List<String>,
     @SerializedName("episode")
@@ -14,5 +26,5 @@ data class GetEpisodeDetailResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("url")
-    val url: String
+    val url: String,
 )

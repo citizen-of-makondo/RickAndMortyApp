@@ -1,9 +1,6 @@
 package com.example.rickandmortyapp.model
 
-import com.example.rickandmortyapp.data.model.GetCharacterDetailResponse
-import com.example.rickandmortyapp.data.model.GetCharactersResponse
-import com.example.rickandmortyapp.data.model.GetEpisodeDetailResponse
-import com.example.rickandmortyapp.data.model.GetLocationDetailRespone
+import com.example.rickandmortyapp.data.model.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,6 +13,12 @@ interface CharacterService {
         @QueryMap filterMap: MutableMap<String, String>,
     ): GetCharactersResponse
 
+    @GET("episode/")
+    suspend fun getEpisodeList(
+        @Query("page") page: Int,
+    //    @QueryMap filterMap: MutableMap<String, String>
+    ): GetEpisodeDetailResponse
+
     @GET("character/{id}")
     suspend fun getCharacter(@Path("id") id: Int): GetCharacterDetailResponse
 
@@ -23,6 +26,6 @@ interface CharacterService {
     suspend fun getLocation(@Path("id") id: Int): GetLocationDetailRespone
 
     @GET("episode/{id}")
-    suspend fun getEpisode(@Path("id") id: Int): GetEpisodeDetailResponse
+    suspend fun getEpisode(@Path("id") id: String): Episode
 }
 
