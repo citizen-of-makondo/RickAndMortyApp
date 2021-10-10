@@ -56,7 +56,7 @@ class CharacterDetailFragment : Fragment() {
         val recyclerView = binding.episodeRecyclerView
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = EpisodeAdapter { episode, _ -> getDetailEpisode(episode.id) }
+        adapter = EpisodeAdapter { episode -> getDetailEpisode(episode.id) }
         recyclerView.adapter = adapter
         binding.locationCharacterDetail.setOnClickListener {
             getDetailLocation()
@@ -64,7 +64,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        characterDetailViewModel.characterDetailLiveData.observe(viewLifecycleOwner) { resources ->
+        characterDetailViewModel.characterDetailLiveData.observe(viewLifecycleOwner) {
         }
         characterDetailViewModel.episodeListLiveData.observe(viewLifecycleOwner) { resources ->
             adapter.updateData(resources)

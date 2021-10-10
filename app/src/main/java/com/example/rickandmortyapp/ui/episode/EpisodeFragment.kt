@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
-import com.example.rickandmortyapp.ui.character.CharacterFragmentDirections
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EpisodeFragment : Fragment() {
@@ -58,7 +57,7 @@ class EpisodeFragment : Fragment() {
         val recyclerView = binding.episodeList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        adapter = EpisodeAdapter { episode, _ -> detailEpisodeNavigation(episode.id) }
+        adapter = EpisodeAdapter { episode -> detailEpisodeNavigation(episode.id) }
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
@@ -76,9 +75,9 @@ class EpisodeFragment : Fragment() {
         })
     }
 
-    private fun detailEpisodeNavigation(character: Int) {
-        val action = CharacterFragmentDirections.actionNavigationCharacterToCharacterDetailFragment(
-            characterID = character)
+    private fun detailEpisodeNavigation(episodeID: Int) {
+        val action = EpisodeFragmentDirections.actionNavigationEpisodeToEpisodeDetailFragment(
+            episodeID)
         view?.let {
             Navigation.findNavController(it)
                 .navigate(action)

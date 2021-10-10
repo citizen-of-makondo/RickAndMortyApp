@@ -23,16 +23,24 @@ class EpisodeDetailFragment : Fragment() {
     ): View {
         _binding = FragmentEpisodeDetailBinding.inflate(inflater, container, false)
 
+        binding.viewmodel = episodeDetailViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
+        setupUI()
+    }
+
+    private fun setupUI() {
+
     }
 
     private fun setupObserver() {
-
+        episodeDetailViewModel.episodeDetailLiveData.observe(viewLifecycleOwner) {
+        }
     }
 
     override fun onDestroyView() {

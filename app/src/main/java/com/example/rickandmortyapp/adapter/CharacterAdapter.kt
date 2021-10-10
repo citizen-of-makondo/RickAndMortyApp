@@ -12,7 +12,7 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
-class CharacterAdapter(var onClick: (item: Character, position: Int) -> Unit = { _, _ -> }) :
+class CharacterAdapter(var onClick: (item: Character) -> Unit = { _ -> }) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) :
@@ -47,7 +47,7 @@ class CharacterAdapter(var onClick: (item: Character, position: Int) -> Unit = {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataList[position]
         holder.bind(dataList[position])
-        holder.itemView.setOnClickListener { onClick(item, position) }
+        holder.itemView.setOnClickListener { onClick(item) }
     }
 
     override fun getItemCount() = dataList.size

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.Episode
 
-class EpisodeAdapter(private val onClick: (item: Episode, position: Int) -> Unit = { _, _ -> }) :
+class EpisodeAdapter(private val onClick: (item: Episode) -> Unit = { _ -> }) :
     RecyclerView.Adapter<EpisodeAdapter.ViewHolder>() {
 
     private val dataList = mutableListOf<Episode>()
@@ -38,7 +38,7 @@ class EpisodeAdapter(private val onClick: (item: Episode, position: Int) -> Unit
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataList[position]
         holder.bind(dataList[position])
-        holder.itemView.setOnClickListener { onClick(item, position) }
+        holder.itemView.setOnClickListener { onClick(item) }
     }
 
     override fun getItemCount() = dataList.size

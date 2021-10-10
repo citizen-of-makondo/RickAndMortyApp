@@ -21,8 +21,8 @@ class EpisodeDetailViewModel(
     private fun getEpisodeDetail(episodeID: Int) {
         viewModelScope.launch {
             try {
-                val data = mainRepository.getEpisodesDetail(episodeID.toString())
-             //   episodeDetailLiveData.value = data
+                val data = mainRepository.getEpisode(episodeID.toString())
+                episodeDetailLiveData.value = data
             } catch (e: Exception) {
                 Log.e("EpisodeDetail", "getEpisodeDetail: ${e.message}")
             }
