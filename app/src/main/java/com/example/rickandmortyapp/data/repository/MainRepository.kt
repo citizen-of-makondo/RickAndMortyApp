@@ -21,5 +21,5 @@ class MainRepository(private val apiService: CharacterService) {
 
     suspend fun getLocationDetail(id: Int): GetLocationDetailRespone = apiService.getLocation(id)
 
-    suspend fun getEpisodeDetail(id: String): Episode = apiService.getEpisode(id)
+    suspend fun getEpisodesDetail(id: String): List<Episode> = apiService.getEpisodesDetail(id)
 }

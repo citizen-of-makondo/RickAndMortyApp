@@ -9,9 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.rickandmortyapp.adapter.CharacterDetailAdapter
-
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
+import com.example.rickandmortyapp.ui.episode.EpisodeAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -20,7 +19,7 @@ class CharacterDetailFragment : Fragment() {
         parametersOf(CharacterDetailFragmentArgs.fromBundle(requireArguments()).characterID)
     })
 
-    lateinit var adapter: CharacterDetailAdapter
+    lateinit var adapter: EpisodeAdapter
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -57,21 +56,22 @@ class CharacterDetailFragment : Fragment() {
         val recyclerView = binding.episodeRecyclerView
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = CharacterDetailAdapter()
+        adapter = EpisodeAdapter { episode, _ -> getDetailEpisode(episode.id) }
         recyclerView.adapter = adapter
         binding.locationCharacterDetail.setOnClickListener {
-            detailLocationDirection()
+            getDetailLocation()
         }
     }
 
     private fun setupObserver() {
         characterDetailViewModel.characterDetailLiveData.observe(viewLifecycleOwner) { resources ->
-            resources ?: return@observe
-            characterDetailViewModel.episodeList.value?.let { adapter.dataList }
+        }
+        characterDetailViewModel.episodeListLiveData.observe(viewLifecycleOwner) { resources ->
+            adapter.updateData(resources)
         }
     }
 
-    private fun detailLocationDirection() {
+    private fun getDetailLocation() {
         val locationID =
             characterDetailViewModel.characterDetailLiveData.value?.location?.url?.split("/".toRegex())
                 ?.last()?.toInt()
@@ -80,6 +80,16 @@ class CharacterDetailFragment : Fragment() {
                 CharacterDetailFragmentDirections.actionCharacterDetailFragmentToLocationDetailFragment(
                     locationID = locationID)
             view?.let { view -> Navigation.findNavController(view).navigate(action) }
+        }
+    }
+
+    private fun getDetailEpisode(episodeID: Int) {
+        val action =
+            CharacterDetailFragmentDirections.actionCharacterDetailFragmentToEpisodeDetailFragment(
+                episodeID = episodeID)
+        view?.let {
+            Navigation.findNavController(it)
+                .navigate(action)
         }
     }
 

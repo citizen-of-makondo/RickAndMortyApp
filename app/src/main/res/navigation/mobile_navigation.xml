@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/characterFilterFragment"
         android:name="com.example.rickandmortyapp.ui.character.CharacterFilterFragment"
-        android:label="fragment_character_filter"
+        android:label="Character filter"
         tools:layout="@layout/fragment_character_filter" >
         <argument
             android:name="filter"
@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.example.rickandmortyapp.ui.character.characterDetail.CharacterDetailFragment"
-        android:label="fragment_character_detail"
+        android:label="Character detail"
         tools:layout="@layout/fragment_character_detail" >
         <argument
             android:name="characterID"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/locationDetailFragment"
         android:name="com.example.rickandmortyapp.ui.location.locationDetail.LocationDetailFragment"
-        android:label="fragment_location_detail"
+        android:label="Location detail"
         tools:layout="@layout/fragment_location_detail" >
         <action
             android:id="@+id/action_locationDetailFragment_to_characterDetailFragment"
@@ -75,7 +75,7 @@
     <fragment
         android:id="@+id/episodeDetailFragment"
         android:name="com.example.rickandmortyapp.ui.episode.episodeDetail.EpisodeDetailFragment"
-        android:label="fragment_episode_detail"
+        android:label="Episode detail"
         tools:layout="@layout/fragment_episode_detail" >
         <action
             android:id="@+id/action_episodeDetailFragment_to_characterDetailFragment"

@@ -9,27 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.Episode
 
-class EpisodeAdapter(private val onItemClicked: (position: Int) -> Unit) :
+class EpisodeAdapter(private val onClick: (item: Episode, position: Int) -> Unit = { _, _ -> }) :
     RecyclerView.Adapter<EpisodeAdapter.ViewHolder>() {
 
     private val dataList = mutableListOf<Episode>()
 
-    class ViewHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-        init {
-            itemView.setOnClickListener(this)
-        }
+    class ViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
         fun bind(episode: Episode) {
             nameTextView.text = episode.name
             airDateTextView.text = episode.airDate
             numberTextView.text = episode.episode
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            onItemClicked(position + 1)
         }
 
         private val nameTextView = itemView.findViewById<TextView>(R.id.nameEpisodeItem)
@@ -41,14 +32,13 @@ class EpisodeAdapter(private val onItemClicked: (position: Int) -> Unit) :
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.fragment_episode_item, parent, false)
-        return ViewHolder(view, onItemClicked)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = dataList[position]
         holder.bind(dataList[position])
-        View.OnClickListener {
-            dataList[position].name
-        }
+        holder.itemView.setOnClickListener { onClick(item, position) }
     }
 
     override fun getItemCount() = dataList.size

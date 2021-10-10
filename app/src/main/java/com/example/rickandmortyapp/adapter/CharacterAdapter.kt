@@ -12,18 +12,14 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.Character
 import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
-class CharacterAdapter(private val onItemClicked: (position: Int) -> Unit) :
+class CharacterAdapter(var onClick: (item: Character, position: Int) -> Unit = { _, _ -> }) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View, private val onItemClicked: (position: Int) -> Unit) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-        init {
-            itemView.setOnClickListener(this)
-        }
+    class ViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
         fun bind(character: Character) {
-           nameTextView.text = character.name
+            nameTextView.text = character.name
             genderTextView.text = character.gender
             specieTextView.text = character.species
             statusTextView.text = character.status
@@ -37,10 +33,6 @@ class CharacterAdapter(private val onItemClicked: (position: Int) -> Unit) :
         private val genderTextView = itemView.findViewById(R.id.genderTextView) as TextView
         private val statusTextView = itemView.findViewById(R.id.statusTextView) as TextView
         private val specieTextView = itemView.findViewById(R.id.specieTextView) as TextView
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            onItemClicked(position + 1)
-        }
     }
 
     private val dataList = mutableListOf<Character>()
@@ -49,14 +41,13 @@ class CharacterAdapter(private val onItemClicked: (position: Int) -> Unit) :
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.fragment_character_item, parent, false)
-        return ViewHolder(view, onItemClicked)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = dataList[position]
         holder.bind(dataList[position])
-        View.OnClickListener {
-            dataList[position].image
-        }
+        holder.itemView.setOnClickListener { onClick(item, position) }
     }
 
     override fun getItemCount() = dataList.size

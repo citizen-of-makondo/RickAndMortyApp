@@ -16,7 +16,7 @@ class CharacterDetailViewModel constructor(
     ViewModel() {
     var characterDetailLiveData = MutableLiveData<GetCharacterDetailResponse>()
     val imageURL = MutableLiveData<String>()
-    var episodeList = MutableLiveData<Episode>()
+    var episodeListLiveData = MutableLiveData<List<Episode>>()
 
     init {
         getCharacterDetail(characterID)
@@ -28,8 +28,7 @@ class CharacterDetailViewModel constructor(
                 val data = mainRepository.getCharacterDetail(characterID)
                 characterDetailLiveData.value = data
                 imageURL.value = data.image
-                val ep = data.episode
-                episodeList.value = mainRepository.getEpisodeDetail(split(ep))
+                episodeListLiveData.value = mainRepository.getEpisodesDetail(split(data.episode))
             } catch (e: Exception) {
                 Log.e("CharacterDetail", "getCharacterDetail: ${e.message}")
             }
@@ -37,7 +36,7 @@ class CharacterDetailViewModel constructor(
     }
 
     private fun split(value: List<String>): String {
-        var stringBuilder = StringBuilder()
+        val stringBuilder = StringBuilder()
         value.forEach { s: String ->
             stringBuilder.append(s.split("/").last())
             stringBuilder.append(",")

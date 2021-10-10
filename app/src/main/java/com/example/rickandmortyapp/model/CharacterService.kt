@@ -27,5 +27,8 @@ interface CharacterService {
 
     @GET("episode/{id}")
     suspend fun getEpisode(@Path("id") id: String): Episode
+
+    @GET("episode/{id}")
+    suspend fun getEpisodesDetail(@Path("id") id: String): List<Episode>
 }
 

@@ -78,7 +78,7 @@ class CharacterFragment : Fragment() {
         val recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        adapter = CharacterAdapter { position -> detailCharacterNavigation(position) }
+        adapter = CharacterAdapter { character, _ -> detailCharacterNavigation(character.id) }
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {

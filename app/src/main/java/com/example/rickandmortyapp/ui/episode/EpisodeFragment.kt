@@ -58,7 +58,7 @@ class EpisodeFragment : Fragment() {
         val recyclerView = binding.episodeList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        adapter = EpisodeAdapter { position -> detailEpisodeNavigation(position) }
+        adapter = EpisodeAdapter { episode, _ -> detailEpisodeNavigation(episode.id) }
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
