@@ -4,54 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewmodel"
             type="com.example.rickandmortyapp.ui.episode.episodeDetail.EpisodeDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.episode.episodeDetail.EpisodeDetailFragment">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/nameEpisodeDetailTextView"
-            style="?attr/textAppearanceHeadline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            tools:context=".ui.episode.episodeDetail.EpisodeDetailFragment">
 
-        <TextView
-            android:id="@+id/nameEpisodeDetail"
-            style="?attr/textAppearanceHeadline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{viewmodel.episodeDetailLiveData.name}"
-            app:layout_constraintBottom_toBottomOf="@id/nameEpisodeDetailTextView"
-            app:layout_constraintStart_toEndOf="@id/nameEpisodeDetailTextView"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/nameEpisodeDetailTextView"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/airDateEpisodeDetailTextView"
-            style="?attr/textAppearanceHeadline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/air_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameEpisodeDetailTextView" />
+            <TextView
+                android:id="@+id/nameEpisodeDetail"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewmodel.episodeDetailLiveData.name}"
+                app:layout_constraintBottom_toBottomOf="@id/nameEpisodeDetailTextView"
+                app:layout_constraintStart_toEndOf="@id/nameEpisodeDetailTextView"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/airDateEpisodeDetail"
-            style="?attr/textAppearanceHeadline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{viewmodel.episodeDetailLiveData.airDate}"
-            app:layout_constraintStart_toEndOf="@id/airDateEpisodeDetailTextView"
-            app:layout_constraintTop_toTopOf="@id/airDateEpisodeDetailTextView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/airDateEpisodeDetailTextView"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/air_date"
+                app:layout_constraintStart_toStartOf="@id/nameEpisodeDetailTextView"
+                app:layout_constraintTop_toBottomOf="@id/nameEpisodeDetailTextView" />
+
+            <TextView
+                android:id="@+id/airDateEpisodeDetail"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewmodel.episodeDetailLiveData.airDate}"
+                app:layout_constraintStart_toEndOf="@id/airDateEpisodeDetailTextView"
+                app:layout_constraintTop_toTopOf="@id/airDateEpisodeDetailTextView" />
+
+            <TextView
+                android:id="@+id/codeEpisodeDetailTextView"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/episode_detail"
+                app:layout_constraintStart_toStartOf="@id/airDateEpisodeDetailTextView"
+                app:layout_constraintTop_toBottomOf="@id/airDateEpisodeDetailTextView" />
+
+            <TextView
+                android:id="@+id/codeEpisodeDetail"
+                style="?attr/textAppearanceHeadline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{viewmodel.episodeDetailLiveData.episode}"
+                app:layout_constraintStart_toEndOf="@id/codeEpisodeDetailTextView"
+                app:layout_constraintTop_toTopOf="@id/codeEpisodeDetailTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/charactersEpisodeDetailRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/codeEpisodeDetailTextView"
+                app:layout_constraintTop_toBottomOf="@id/codeEpisodeDetailTextView"
+                tools:listitem="@layout/fragment_character_item_in_episode_and_location" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

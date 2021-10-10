@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/nameEpisodeItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/name"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <TextView
-        android:id="@+id/airDateEpisodeItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_date"
-        app:layout_constraintTop_toBottomOf="@id/nameEpisodeItem"
-        app:layout_constraintStart_toStartOf="@id/nameEpisodeItem" />
+        <variable
+            name="episode"
+            type="com.example.rickandmortyapp.data.model.EpisodeDTO" />
+    </data>
 
-    <TextView
-        android:id="@+id/numberEpisodeItem"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:hint="@string/episode"
-        app:layout_constraintBottom_toBottomOf="@+id/airDateEpisodeItem"
-        app:layout_constraintStart_toEndOf="@+id/airDateEpisodeItem"
-        app:layout_constraintTop_toTopOf="@+id/airDateEpisodeItem" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/nameEpisodeItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/name"
+            android:text="@{episode.name}"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/airDateEpisodeItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/air_date"
+            android:text="@{episode.airDate.toString()}"
+            app:layout_constraintStart_toStartOf="@id/nameEpisodeItem"
+            app:layout_constraintTop_toBottomOf="@id/nameEpisodeItem" />
+
+        <TextView
+            android:id="@+id/numberEpisodeItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:hint="@string/episode"
+            android:text="@{episode.episode}"
+            app:layout_constraintBottom_toBottomOf="@+id/airDateEpisodeItem"
+            app:layout_constraintStart_toEndOf="@+id/airDateEpisodeItem"
+            app:layout_constraintTop_toTopOf="@+id/airDateEpisodeItem" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

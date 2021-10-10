@@ -9,14 +9,14 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.data.model.CharacterDTO
 import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
 
-class CharacterAdapter(var onClick: (item: CharacterDTO) -> Unit = { _ -> }) :
+class CharacterAdapterForEpisodeAndLocation(var onClick: (item: CharacterDTO) -> Unit = { _ -> }) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val dataList = mutableListOf<CharacterDTO>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BindingHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_character_item, parent, false)
+            .inflate(R.layout.fragment_character_item_in_episode_and_location, parent, false)
         )
     }
 

@@ -58,8 +58,7 @@ class CharacterFragment : Fragment() {
 
     private fun setupObservers() {
         characterViewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
-            resource ?: return@observe
-            when (resource.statusEnum) {
+                when (resource.statusEnum) {
                 LoadStatusEnum.SUCCESS -> {
                     resource.data?.let {
                         adapter.updateData(it)
@@ -80,7 +79,7 @@ class CharacterFragment : Fragment() {
         recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
-        adapter = CharacterAdapter { character-> detailCharacterNavigation(character.id) }
+        adapter = CharacterAdapter { character -> detailCharacterNavigation(character.id) }
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {

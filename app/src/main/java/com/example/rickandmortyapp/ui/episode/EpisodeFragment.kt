@@ -1,12 +1,13 @@
 package com.example.rickandmortyapp.ui.episode
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmortyapp.R
+import com.example.rickandmortyapp.adapter.EpisodeAdapter
 import com.example.rickandmortyapp.databinding.FragmentEpisodeBinding
 import com.example.rickandmortyapp.model.LoadStatusEnum
 import com.example.rickandmortyapp.modules.koin.PaginationScrollListener
@@ -14,6 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EpisodeFragment : Fragment() {
     private val episodeViewModel: EpisodeViewModel by viewModel()
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: EpisodeAdapter
     private var _binding: FragmentEpisodeBinding? = null
 
@@ -54,8 +56,8 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun setupUI() {
-        val recyclerView = binding.episodeList
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView = binding.episodeList
+        val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         adapter = EpisodeAdapter { episode -> detailEpisodeNavigation(episode.id) }
         recyclerView.adapter = adapter
@@ -73,6 +75,33 @@ class EpisodeFragment : Fragment() {
                 episodeViewModel.getEpisodeList()
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter_menu -> {
+                filterLocationNavigation()
+                true
+            }
+            R.id.search_menu -> {
+                searchLocation(item)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun searchLocation(item: MenuItem) {
+        TODO("Сделать поиск по локации")
+    }
+
+    private fun filterLocationNavigation() {
+        TODO("Сделать фильтр по локации")
     }
 
     private fun detailEpisodeNavigation(episodeID: Int) {

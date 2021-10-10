@@ -21,6 +21,6 @@ val appModule = module {
     viewModel { (characterID: Int) -> CharacterDetailViewModel(get(), characterID) }
     viewModel { EpisodeViewModel(get()) }
     viewModel { (episodeID: Int) -> EpisodeDetailViewModel(get(), episodeID) }
-    viewModel { LocationViewModel() }
+    viewModel { LocationViewModel(get()) }
     viewModel { (locationID: Int) -> LocationDetailViewModel(get(), locationID) }
 }

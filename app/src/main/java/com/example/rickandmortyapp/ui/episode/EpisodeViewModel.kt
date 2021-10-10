@@ -3,7 +3,7 @@ package com.example.rickandmortyapp.ui.episode
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmortyapp.data.model.Episode
+import com.example.rickandmortyapp.data.model.EpisodeDTO
 import com.example.rickandmortyapp.data.repository.MainRepository
 import com.example.rickandmortyapp.model.LoadingStatus
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ class EpisodeViewModel(
     private var countAllPages = 1
     private var pageNumberEpisodeList: Int = 1
     private var timerTask: TimerTask? = null
-    val episodeLiveData = MutableLiveData<LoadingStatus<List<Episode>>>()
+    val episodeLiveData = MutableLiveData<LoadingStatus<List<EpisodeDTO>>>()
     val loadingLiveData = MutableLiveData<Boolean>()
   //  var characterFilterList: ArrayList<CharacterFilter> = arrayListOf()
 
@@ -44,9 +44,9 @@ class EpisodeViewModel(
         }
         val data = mainRepository.getEpisodes(pageNumberEpisodeList)
         countAllPages = data.info.pages
-        var oldList: List<Episode> = listOf()
+        var oldList: List<EpisodeDTO> = listOf()
         if (pageNumberEpisodeList > 1) {
-            oldList = episodeLiveData.value?.data as MutableList<Episode>
+            oldList = episodeLiveData.value?.data as MutableList<EpisodeDTO>
         }
         episodeLiveData.value =
             LoadingStatus.success(data = oldList + data.results)

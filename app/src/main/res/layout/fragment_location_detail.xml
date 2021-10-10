@@ -10,65 +10,78 @@
             type="com.example.rickandmortyapp.ui.location.locationDetail.LocationDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.location.locationDetail.LocationDetailFragment">
+        android:layout_height="wrap_content">
 
-
-        <TextView
-            android:id="@+id/nameLocationDetail"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginTop="24dp"
-            android:text="@{viewmodel.locationDetailLiveData.name}"
-            android:textSize="@dimen/textsize_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:context=".ui.location.locationDetail.LocationDetailFragment">
 
-        <TextView
-            android:id="@+id/typeLocationDetailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/type"
-            android:textSize="@dimen/textsize_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameLocationDetail" />
+            <TextView
+                android:id="@+id/nameLocationDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@{viewmodel.locationDetailLiveData.name}"
+                android:textSize="@dimen/textsize_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/typeLocationDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@{viewmodel.locationDetailLiveData.type}"
-            android:textSize="@dimen/textsize_24"
-            app:layout_constraintBottom_toBottomOf="@+id/typeLocationDetailTextView"
-            app:layout_constraintStart_toEndOf="@+id/typeLocationDetailTextView"
-            app:layout_constraintTop_toTopOf="@+id/typeLocationDetailTextView" />
+            <TextView
+                android:id="@+id/typeLocationDetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/type"
+                android:textSize="@dimen/textsize_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nameLocationDetail" />
 
-        <TextView
-            android:id="@+id/dimensionLocationDetailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/dimension"
-            android:textSize="@dimen/textsize_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/typeLocationDetailTextView" />
+            <TextView
+                android:id="@+id/typeLocationDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@{viewmodel.locationDetailLiveData.type}"
+                android:textSize="@dimen/textsize_24"
+                app:layout_constraintBottom_toBottomOf="@+id/typeLocationDetailTextView"
+                app:layout_constraintStart_toEndOf="@+id/typeLocationDetailTextView"
+                app:layout_constraintTop_toTopOf="@+id/typeLocationDetailTextView" />
 
-        <TextView
-            android:id="@+id/dimensionLocationDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:singleLine="false"
-            android:text="@{viewmodel.locationDetailLiveData.dimension}"
-            android:textSize="@dimen/textsize_24"
-            app:layout_constraintBottom_toBottomOf="@+id/dimensionLocationDetailTextView"
-            app:layout_constraintStart_toEndOf="@+id/dimensionLocationDetailTextView"
-            app:layout_constraintTop_toTopOf="@+id/dimensionLocationDetailTextView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/dimensionLocationDetailTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/dimension"
+                android:textSize="@dimen/textsize_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/typeLocationDetailTextView" />
+
+            <TextView
+                android:id="@+id/dimensionLocationDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:singleLine="false"
+                android:text="@{viewmodel.locationDetailLiveData.dimension}"
+                android:textSize="@dimen/textsize_24"
+                app:layout_constraintBottom_toBottomOf="@+id/dimensionLocationDetailTextView"
+                app:layout_constraintStart_toEndOf="@+id/dimensionLocationDetailTextView"
+                app:layout_constraintTop_toTopOf="@+id/dimensionLocationDetailTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/characterList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layout_constraintStart_toStartOf="@id/dimensionLocationDetailTextView"
+                app:layout_constraintTop_toBottomOf="@id/dimensionLocationDetailTextView"
+                tools:listitem="@layout/fragment_character_item_in_episode_and_location" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

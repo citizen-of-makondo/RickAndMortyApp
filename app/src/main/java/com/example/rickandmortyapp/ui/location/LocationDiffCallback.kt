@@ -1,13 +1,10 @@
-package com.example.rickandmortyapp.ui.episode
+package com.example.rickandmortyapp.ui.location
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.rickandmortyapp.data.model.EpisodeDTO
+import com.example.rickandmortyapp.data.model.LocationDTO
 
-class EpisodeDiffCallback(
-    var oldList: List<EpisodeDTO>,
-    var newList: List<EpisodeDTO>,
-) : DiffUtil.Callback() {
-
+class LocationDiffCallback(var oldList: List<LocationDTO>, var newList: List<LocationDTO>) :
+    DiffUtil.Callback() {
     override fun getOldListSize() = oldList.size
 
     override fun getNewListSize() = newList.size
@@ -19,4 +16,5 @@ class EpisodeDiffCallback(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition].name == newList[newItemPosition].name
     }
+
 }

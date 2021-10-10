@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmortyapp.data.model.Episode
-import com.example.rickandmortyapp.data.model.GetCharacterDetailResponse
+import com.example.rickandmortyapp.data.model.CharacterDTO
+import com.example.rickandmortyapp.data.model.EpisodeDTO
 import com.example.rickandmortyapp.data.repository.MainRepository
 import kotlinx.coroutines.launch
 
@@ -14,9 +14,9 @@ class CharacterDetailViewModel constructor(
     characterID: Int,
 ) :
     ViewModel() {
-    var characterDetailLiveData = MutableLiveData<GetCharacterDetailResponse>()
+    var characterDetailLiveData = MutableLiveData<CharacterDTO>()
     val imageURL = MutableLiveData<String>()
-    var episodeListLiveData = MutableLiveData<List<Episode>>()
+    var episodeListLiveData = MutableLiveData<List<EpisodeDTO>>()
 
     init {
         getCharacterDetail(characterID)
@@ -28,7 +28,7 @@ class CharacterDetailViewModel constructor(
                 val data = mainRepository.getCharacterDetail(characterID)
                 characterDetailLiveData.value = data
                 imageURL.value = data.image
-                episodeListLiveData.value = mainRepository.getEpisodesDetail(split(data.episode))
+                episodeListLiveData.value = mainRepository.getMultipleEpisodes(split(data.episode))
             } catch (e: Exception) {
                 Log.e("CharacterDetail", "getCharacterDetail: ${e.message}")
             }

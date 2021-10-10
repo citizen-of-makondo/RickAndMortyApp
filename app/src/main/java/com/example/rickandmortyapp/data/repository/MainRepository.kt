@@ -6,22 +6,38 @@ import com.example.rickandmortyapp.ui.character.CharacterFilter
 import com.example.rickandmortyapp.ui.character.Mapping
 
 class MainRepository(private val apiService: CharacterService) {
-    suspend fun getCharacters(pageNumberCharacterList: Int, characterFilter: ArrayList<CharacterFilter>): GetCharactersResponse {
+    suspend fun getCharacters(
+        pageNumberCharacterList: Int,
+        characterFilter: ArrayList<CharacterFilter>,
+    ): GetCharactersResponse {
         val filterMap = Mapping.mapFilterListToQueryMap(characterFilter)
         return apiService.getCharacterList(pageNumberCharacterList, filterMap)
     }
 
-    suspend fun getEpisodes(pageNumberCharacterList: Int/*, filter: ArrayList<EpisodeFilter>*/): GetEpisodeDetailResponse {
-      //  val filterMap = Mapping.mapFilterListToQueryMap(filter)
-        return apiService.getEpisodeList(pageNumberCharacterList, /*filterMap*/)
-    }
+    suspend fun getMultipleCharacters(id: String): List<CharacterDTO> =
+        apiService.getMultipleCharacters(id)
 
-    suspend fun getCharacterDetail(id: Int): GetCharacterDetailResponse =
+    suspend fun getCharacterDetail(id: Int): CharacterDTO =
         apiService.getCharacter(id)
 
-    suspend fun getLocationDetail(id: Int): GetLocationDetailRespone = apiService.getLocation(id)
+    suspend fun getEpisodes(pageNumberCharacterList: Int/*, filter: ArrayList<EpisodeFilter>*/): GetEpisodeDetailResponse {
+        //  val filterMap = Mapping.mapFilterListToQueryMap(filter)
+        return apiService.getEpisodeList(pageNumberCharacterList /*filterMap*/)
+    }
 
-    suspend fun getEpisode(id: String) : Episode = apiService.getEpisode(id)
+    suspend fun getMultipleEpisodes(id: String): List<EpisodeDTO> =
+        apiService.getMultipleEpisodes(id)
 
-    suspend fun getEpisodesDetail(id: String): List<Episode> = apiService.getEpisodesDetail(id)
+    suspend fun getLocations(
+        pageNumberList: Int,
+       /* locationFilter: ArrayList<CharacterFilter>,*/
+    ): GetLocationResponse {
+      //  val filterMap = Mapping.mapFilterListToQueryMap(characterFilter)
+        return apiService.getLocationList(pageNumberList /*filterMap*/)
+    }
+
+    suspend fun getLocationDetail(id: Int): LocationDTO = apiService.getLocation(id)
+
+    suspend fun getEpisode(id: String): EpisodeDTO = apiService.getEpisode(id)
+
 }

@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.BR
 import com.example.rickandmortyapp.R
-import com.example.rickandmortyapp.data.model.CharacterDTO
-import com.example.rickandmortyapp.ui.character.CharacterDiffCallback
+import com.example.rickandmortyapp.data.model.LocationDTO
+import com.example.rickandmortyapp.ui.location.LocationDiffCallback
 
-class CharacterAdapter(var onClick: (item: CharacterDTO) -> Unit = { _ -> }) :
+class LocationAdapter(private val onClick: (item: LocationDTO) -> Unit = { _ -> }) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dataList = mutableListOf<CharacterDTO>()
+    private val dataList = mutableListOf<LocationDTO>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BindingHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_character_item, parent, false)
+            .inflate(R.layout.fragment_location_item, parent, false)
         )
     }
 
@@ -24,16 +24,16 @@ class CharacterAdapter(var onClick: (item: CharacterDTO) -> Unit = { _ -> }) :
         val item = dataList[position]
         holder.itemView.setOnClickListener { onClick(item) }
         holder as BindingHolder
-        holder.binding?.setVariable(BR.character, item)
+        holder.binding?.setVariable(BR.location, item)
     }
 
     override fun getItemCount() = dataList.size
 
-    fun updateData(newList: List<CharacterDTO>) {
-        val characterDiffCallback = CharacterDiffCallback(dataList, newList)
-        val characterDiffResult = DiffUtil.calculateDiff(characterDiffCallback)
+    fun updateData(newList: List<LocationDTO>) {
+        val locationDiffCallback = LocationDiffCallback(dataList, newList)
+        val locationDiffResult = DiffUtil.calculateDiff(locationDiffCallback)
         dataList.clear()
         dataList.addAll(newList)
-        characterDiffResult.dispatchUpdatesTo(this)
+        locationDiffResult.dispatchUpdatesTo(this)
     }
 }

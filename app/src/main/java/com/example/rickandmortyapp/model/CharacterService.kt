@@ -13,22 +13,33 @@ interface CharacterService {
         @QueryMap filterMap: MutableMap<String, String>,
     ): GetCharactersResponse
 
+    @GET("character/{id}")
+    suspend fun getMultipleCharacters(@Path("id") id: String): List<CharacterDTO>
+
+    @GET("character/{id}")
+    suspend fun getCharacter(@Path("id") id: Int): CharacterDTO
+
     @GET("episode/")
     suspend fun getEpisodeList(
         @Query("page") page: Int,
-    //    @QueryMap filterMap: MutableMap<String, String>
+        //    @QueryMap filterMap: MutableMap<String, String>
     ): GetEpisodeDetailResponse
 
-    @GET("character/{id}")
-    suspend fun getCharacter(@Path("id") id: Int): GetCharacterDetailResponse
+    @GET("episode/{id}")
+    suspend fun getMultipleEpisodes(@Path("id") id: String): List<EpisodeDTO>
+
+    @GET("episode/{id}")
+    suspend fun getEpisode(@Path("id") id: String): EpisodeDTO
+
+    @GET("location/")
+    suspend fun getLocationList(
+        @Query("page") page: Int,
+    ): GetLocationResponse
 
     @GET("location/{id}")
-    suspend fun getLocation(@Path("id") id: Int): GetLocationDetailRespone
+    suspend fun getLocation(@Path("id") id: Int): LocationDTO
 
-    @GET("episode/{id}")
-    suspend fun getEpisode(@Path("id") id: String): Episode
-
-    @GET("episode/{id}")
-    suspend fun getEpisodesDetail(@Path("id") id: String): List<Episode>
+    @GET("location/{id}")
+    suspend fun getMultipleLocation(@Path("id") id: Int): List<LocationDTO>
 }
 

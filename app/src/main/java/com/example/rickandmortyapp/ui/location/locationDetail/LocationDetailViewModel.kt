@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rickandmortyapp.data.model.GetLocationDetailRespone
+import com.example.rickandmortyapp.data.model.CharacterDTO
+import com.example.rickandmortyapp.data.model.LocationDTO
 import com.example.rickandmortyapp.data.repository.MainRepository
 import kotlinx.coroutines.launch
 
@@ -12,7 +13,8 @@ class LocationDetailViewModel constructor(
     private val mainRepository: MainRepository,
     locationID: Int,
 ) : ViewModel() {
-    var locationDetailLiveData = MutableLiveData<GetLocationDetailRespone>()
+    var locationDetailLiveData = MutableLiveData<LocationDTO>()
+    var characterListLiveData = MutableLiveData<List<CharacterDTO>>()
 
     init {
         getLocationDetail(locationID)
@@ -23,9 +25,20 @@ class LocationDetailViewModel constructor(
             try {
                 val data = mainRepository.getLocationDetail(locationID)
                 locationDetailLiveData.value = data
+                val dataA = mainRepository.getMultipleCharacters(split(data.characters))
+                characterListLiveData.value = dataA
             } catch (e: Exception) {
                 Log.e("LocationDetail", "getLocationDetail: ${e.message}")
             }
         }
+    }
+
+    private fun split(value: List<String>): String {
+        val stringBuilder = StringBuilder()
+        value.forEach { s: String ->
+            stringBuilder.append(s.split("/").last())
+            stringBuilder.append(",")
+        }
+        return stringBuilder.toString()
     }
 }

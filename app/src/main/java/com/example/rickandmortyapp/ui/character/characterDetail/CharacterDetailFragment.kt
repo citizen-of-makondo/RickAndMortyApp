@@ -3,14 +3,13 @@ package com.example.rickandmortyapp.ui.character.characterDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rickandmortyapp.adapter.EpisodeAdapter
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
-import com.example.rickandmortyapp.ui.episode.EpisodeAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -34,16 +33,6 @@ class CharacterDetailFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                parentFragmentManager.popBackStack()
-                true
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
