@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.adapter.CharacterAdapter
 import com.example.rickandmortyapp.databinding.FragmentCharacterBinding
@@ -20,6 +21,7 @@ const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
 
 class CharacterFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by viewModel()
+    private lateinit var recyclerView: RecyclerView
 
     private lateinit var adapter: CharacterAdapter
     private var _binding: FragmentCharacterBinding? = null
@@ -75,7 +77,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun setupUI() {
-        val recyclerView = binding.characterList
+        recyclerView = binding.characterList
         val layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.layoutManager = layoutManager
         adapter = CharacterAdapter { character-> detailCharacterNavigation(character.id) }
