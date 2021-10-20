@@ -8,7 +8,7 @@
 
         <variable
             name="episodeViewModel"
-            type="com.example.rickandmortyapp.ui.episode.EpisodeViewModel" />
+            type="com.alexilinskiy.rickandmortyapp.ui.episode.EpisodeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

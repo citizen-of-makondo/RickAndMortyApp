@@ -17,4 +17,8 @@
         android:icon="@drawable/ic_video"
         android:title="@string/title_episode" />
 
+    <item
+        android:id="@+id/navigation_about_me"
+        android:icon="@drawable/ic_smile_foreground"
+        android:title="About me"/>
 </menu>

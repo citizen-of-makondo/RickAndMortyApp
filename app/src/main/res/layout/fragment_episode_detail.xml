@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.rickandmortyapp.ui.episode.episodeDetail.EpisodeDetailViewModel" />
+            type="com.alexilinskiy.rickandmortyapp.ui.episode.episodeDetail.EpisodeDetailViewModel" />
     </data>
 
     <ScrollView

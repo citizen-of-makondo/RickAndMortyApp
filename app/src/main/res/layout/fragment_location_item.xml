@@ -8,7 +8,7 @@
 
         <variable
             name="location"
-            type="com.example.rickandmortyapp.data.model.LocationDTO" />
+            type="com.alexilinskiy.rickandmortyapp.data.model.LocationDTO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

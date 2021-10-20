@@ -6,7 +6,7 @@
 
         <variable
             name="episode"
-            type="com.example.rickandmortyapp.data.model.EpisodeDTO" />
+            type="com.alexilinskiy.rickandmortyapp.data.model.EpisodeDTO" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
