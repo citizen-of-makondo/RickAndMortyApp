@@ -8,7 +8,7 @@
 
         <variable
             name="episodeViewModel"
-            type="com.example.rickandmortyapp.ui.episode.EpisodeViewModel" />
+            type="com.alexilinskiy.rickandmortyapp.ui.episode.EpisodeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,9 +18,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/episode_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/fragment_episode_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
@@ -43,16 +45,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/resetFAB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@color/dark_green"
-            android:src="@drawable/ic_reset"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:maxImageSize="50dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
