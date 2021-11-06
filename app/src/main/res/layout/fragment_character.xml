@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewmodel"
             type="com.example.rickandmortyapp.ui.character.CharacterViewModel" />
@@ -20,6 +18,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/character_list"
             android:layout_width="0dp"
+            tools:listitem="@layout/fragment_character_item"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

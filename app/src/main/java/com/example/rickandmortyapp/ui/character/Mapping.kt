@@ -1,14 +1,14 @@
 package com.example.rickandmortyapp.ui.character
 
 object Mapping {
-    fun mapFilterListToQueryMap(result: ArrayList<Filter>): MutableMap<String, String> {
+    fun mapFilterListToQueryMap(result: ArrayList<CharacterFilter>): MutableMap<String, String> {
         val filterMap: MutableMap<String, String> = mutableMapOf()
         for (item in result) {
             when (item) {
-                is Filter.Status -> filterMap["status"] = item.value
-                is Filter.Gender -> filterMap["gender"] = item.value
-                is Filter.Species -> filterMap["species"] = item.value
-                is Filter.Name -> filterMap["name"] = item.value
+                is CharacterFilter.Status -> filterMap["status"] = item.value
+                is CharacterFilter.Gender -> filterMap["gender"] = item.value
+                is CharacterFilter.Species -> filterMap["species"] = item.value
+                is CharacterFilter.Name -> filterMap["name"] = item.value
             }
         }
         return filterMap

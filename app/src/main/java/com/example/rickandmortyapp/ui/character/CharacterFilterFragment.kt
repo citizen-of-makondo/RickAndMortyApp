@@ -6,24 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.example.rickandmortyapp.databinding.FragmentCharacterFilterBinding
 
 const val REQUEST_FILTER_KEY = "fromFilterToViewKey"
-const val REQUEST_CHARACTER_KEY = "fromViewToFilterKey"
 
 class CharacterFilterFragment : Fragment() {
     private var _binding: FragmentCharacterFilterBinding? = null
     private val binding get() = _binding!!
 
-    var filterList: ArrayList<Filter> = arrayListOf()
+    var characterFilterList: ArrayList<CharacterFilter> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(REQUEST_CHARACTER_KEY) { _, bundle ->
-            filterList = bundle.getSerializable(BUNDLE_CHARACTER_KEY) as ArrayList<Filter>
-        }
+        characterFilterList.addAll(CharacterFilterFragmentArgs.fromBundle(requireArguments()).filter)
     }
 
     override fun onCreateView(
@@ -47,19 +43,19 @@ class CharacterFilterFragment : Fragment() {
             findNavController().popBackStack()
         }
         clearFilter.setOnClickListener {
-            filterList.clear()
+            characterFilterList.clear()
             putFilterInBundle(view)
             findNavController().popBackStack()
         }
-        if (!filterList.isNullOrEmpty()) {
-            for (item in filterList) {
-                if (item is Filter.Status) CharacterFilterChipChecked().setColorStatusChipGroup(
+        if (!characterFilterList.isNullOrEmpty()) {
+            for (item in characterFilterList) {
+                if (item is CharacterFilter.Status) CharacterFilterChipChecked().setColorStatusChipGroup(
                     statusGroup,
                     item)
-                if (item is Filter.Gender) CharacterFilterChipChecked().setColorGenderChipGroup(
+                if (item is CharacterFilter.Gender) CharacterFilterChipChecked().setColorGenderChipGroup(
                     genderGroup,
                     item)
-                if (item is Filter.Species) CharacterFilterChipChecked().setColorSpeciesChipGroup(
+                if (item is CharacterFilter.Species) CharacterFilterChipChecked().setColorSpeciesChipGroup(
                     specieGroup,
                     item)
             }

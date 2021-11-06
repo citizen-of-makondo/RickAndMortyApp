@@ -19,7 +19,7 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
     private var timerTask: TimerTask? = null
     val charactersLiveData = MutableLiveData<LoadingStatus<List<Character>>>()
     val loadingLiveData = MutableLiveData<Boolean>()
-    var filterList: ArrayList<Filter> = arrayListOf()
+    var characterFilterList: ArrayList<CharacterFilter> = arrayListOf()
 
     init {
         getCharacterList()
@@ -41,8 +41,8 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
         if (pageNumberCharacterList > countAllPages) {
             return
         }
-        val data = mainRepository.getCharacters(pageNumberCharacterList, filterList)
-        countAllPages = data.info.pages
+        val data = mainRepository.getCharacters(pageNumberCharacterList, characterFilterList)
+        countAllPages = data.episodeCharacterInfo.pages
         var oldList: List<Character> = listOf()
         if (pageNumberCharacterList > 1) {
             oldList = charactersLiveData.value?.data as MutableList<Character>
@@ -57,7 +57,7 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
             timerTask?.cancel()
             timerTask = object : TimerTask() {
                 override fun run() {
-                    filterList.add(0, element = Filter.Name(newText))
+                    characterFilterList.add(0, element = CharacterFilter.Name(newText))
                     setPageAndGetData()
                 }
             }
