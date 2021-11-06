@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 const val BUNDLE_FILTER_KEY = "bundleFromFilterToViewKey"
 
 class CharacterFragment : Fragment() {
-    private val characterViewModel: CharacterViewModel by viewModel()
+    private val viewModel: CharacterViewModel by viewModel()
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var adapter: CharacterAdapter
@@ -30,9 +30,9 @@ class CharacterFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(REQUEST_FILTER_KEY) { _, bundle ->
-            characterViewModel.characterFilterList =
+            viewModel.characterFilterList =
                 bundle.getSerializable(BUNDLE_FILTER_KEY) as ArrayList<CharacterFilter>
-            characterViewModel.setPageAndGetData()
+            viewModel.setPageAndGetData()
         }
     }
 
@@ -42,7 +42,7 @@ class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCharacterBinding.inflate(inflater, container, false)
-        binding.viewmodel = characterViewModel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         setHasOptionsMenu(true)
@@ -57,19 +57,15 @@ class CharacterFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        characterViewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
-                when (resource.statusEnum) {
+        viewModel.charactersLiveData.observe(viewLifecycleOwner) { resource ->
+            when (resource.statusEnum) {
                 LoadStatusEnum.SUCCESS -> {
-                    resource.data?.let {
-                        adapter.updateData(it)
-                        if (it.isNullOrEmpty()) {
-                            binding.characterList.visibility = View.GONE
-                            binding.noResultsTextView.visibility = View.VISIBLE
-                        }
-                    }
+                    adapter.updateData(resource.data!!)
                 }
                 LoadStatusEnum.ERROR -> {
-                    binding.noResultsTextView.setText(getString(R.string.error))
+                    binding.characterList.visibility = View.GONE
+                    binding.noResultsTextView.visibility = View.VISIBLE
+                    binding.noResultsTextView.text = getString(R.string.error)
                 }
             }
         }
@@ -84,7 +80,7 @@ class CharacterFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun isLoading(): Boolean {
-                return characterViewModel.loadingLiveData.value ?: return false
+                return viewModel.loadingLiveData.value ?: return false
             }
 
             override fun loadMoreItems() {
@@ -92,15 +88,9 @@ class CharacterFragment : Fragment() {
             }
 
             private fun getMoreItems() {
-                characterViewModel.getCharacterList()
+                viewModel.getCharacterList()
             }
         })
-
-        binding.resetFAB.setOnClickListener {
-            characterViewModel.characterFilterList.clear()
-            characterViewModel.setPageAndGetData()
-            layoutManager.scrollToPosition(0)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -136,18 +126,18 @@ class CharacterFragment : Fragment() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText.isNullOrEmpty()) {
-                        characterViewModel.characterFilterList.clear()
-                        characterViewModel.setPageAndGetData()
+                        viewModel.characterFilterList.clear()
+                        viewModel.setPageAndGetData()
                     } else {
-                        characterViewModel.searchCharactersByName(newText)
+                        viewModel.searchCharactersByName(newText)
                     }
                     return true
                 }
             })
 
             setOnCloseListener {
-                characterViewModel.characterFilterList.clear()
-                characterViewModel.setPageAndGetData()
+                viewModel.characterFilterList.clear()
+                viewModel.setPageAndGetData()
                 false
             }
         }
@@ -156,7 +146,7 @@ class CharacterFragment : Fragment() {
     private fun filterCharacterNavigation() {
         view?.let {
             val filterList = CharacterFilter.FilterList()
-            filterList.addAll(characterViewModel.characterFilterList)
+            filterList.addAll(viewModel.characterFilterList)
             val action =
                 CharacterFragmentDirections.actionNavigationCharacterToCharacterFilterFragment(
                     filter = filterList)

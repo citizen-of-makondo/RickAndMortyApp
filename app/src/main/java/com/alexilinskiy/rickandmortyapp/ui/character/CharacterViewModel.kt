@@ -42,14 +42,20 @@ class CharacterViewModel(private val mainRepository: MainRepository) : ViewModel
             return
         }
         val data = mainRepository.getCharacters(pageNumberCharacterList, characterFilterList)
-        countAllPages = data.episodeCharacterInfo.pages
-        var oldList: List<CharacterDTO> = listOf()
-        if (pageNumberCharacterList > 1) {
-            oldList = charactersLiveData.value?.data as MutableList<CharacterDTO>
+        if (data.isSuccessful) {
+            countAllPages = data.body()?.episodeCharacterInfo?.pages!!
+            var oldList: List<CharacterDTO> = listOf()
+            if (pageNumberCharacterList > 1) {
+                oldList = charactersLiveData.value?.data as MutableList<CharacterDTO>
+            }
+            charactersLiveData.value =
+                LoadingStatus.success(data = oldList + data.body()?.results!!)
+
+            pageNumberCharacterList++
+        } else {
+            charactersLiveData.value =
+                LoadingStatus.error(message = data.message().toString(), data = charactersLiveData.value?.data)
         }
-        charactersLiveData.value =
-            LoadingStatus.success(data = oldList + data.results)
-        pageNumberCharacterList++
     }
 
     fun searchCharactersByName(newText: String) {

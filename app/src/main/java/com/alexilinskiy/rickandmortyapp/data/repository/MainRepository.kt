@@ -4,12 +4,13 @@ import com.alexilinskiy.rickandmortyapp.data.model.*
 import com.alexilinskiy.rickandmortyapp.model.CharacterService
 import com.alexilinskiy.rickandmortyapp.ui.character.CharacterFilter
 import com.alexilinskiy.rickandmortyapp.ui.character.Mapping
+import retrofit2.Response
 
 class MainRepository(private val apiService: CharacterService) {
     suspend fun getCharacters(
         pageNumberCharacterList: Int,
         characterFilter: ArrayList<CharacterFilter>,
-    ): GetCharactersResponse {
+    ): Response<GetCharactersResponse> {
         val filterMap = Mapping.mapFilterListToQueryMap(characterFilter)
         return apiService.getCharacterList(pageNumberCharacterList, filterMap)
     }

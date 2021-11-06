@@ -1,17 +1,18 @@
 package com.alexilinskiy.rickandmortyapp.model
 
 import com.alexilinskiy.rickandmortyapp.data.model.*
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface CharacterService {
-    @GET("character/")
+    @GET("character")
     suspend fun getCharacterList(
         @Query("page") page: Int,
         @QueryMap filterMap: MutableMap<String, String>,
-    ): GetCharactersResponse
+    ): Response<GetCharactersResponse>
 
     @GET("character/{id}")
     suspend fun getMultipleCharacters(@Path("id") id: String): List<CharacterDTO>
