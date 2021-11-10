@@ -47,7 +47,7 @@ class CharacterDetailFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         adapter = EpisodeAdapter { episode -> getDetailEpisode(episode.id) }
         recyclerView.adapter = adapter
-        binding.locationCharacterDetail.setOnClickListener {
+        binding.locationCharacterDetailTextView.setOnClickListener {
             getDetailLocation()
         }
     }
