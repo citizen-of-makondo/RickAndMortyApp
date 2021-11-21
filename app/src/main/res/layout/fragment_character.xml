@@ -19,11 +19,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/character_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/fragment_character_item" />
+            tools:listitem="@layout/fragment_character_item_in_episode_and_location" />
 
         <ProgressBar
             android:id="@+id/progressBar"

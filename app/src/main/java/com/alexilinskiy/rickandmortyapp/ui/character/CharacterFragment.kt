@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alexilinskiy.rickandmortyapp.R
 import com.alexilinskiy.rickandmortyapp.adapter.CharacterAdapter
@@ -73,7 +73,7 @@ class CharacterFragment : Fragment() {
 
     private fun setupUI() {
         recyclerView = binding.characterList
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         adapter = CharacterAdapter { character -> detailCharacterNavigation(character.id) }
         recyclerView.adapter = adapter

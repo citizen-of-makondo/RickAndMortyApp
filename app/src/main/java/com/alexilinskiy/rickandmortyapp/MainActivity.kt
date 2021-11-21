@@ -12,6 +12,9 @@ import com.alexilinskiy.rickandmortyapp.databinding.ActivityMainBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
+
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -36,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         MobileAds.initialize(applicationContext)
+
+        supportActionBar
     }
 
     override fun onSupportNavigateUp(): Boolean {

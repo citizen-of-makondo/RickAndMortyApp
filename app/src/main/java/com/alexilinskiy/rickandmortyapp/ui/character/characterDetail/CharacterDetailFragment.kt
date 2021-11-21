@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alexilinskiy.rickandmortyapp.R
 import com.alexilinskiy.rickandmortyapp.adapter.EpisodeAdapter
 import com.alexilinskiy.rickandmortyapp.databinding.FragmentCharacterDetailBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,6 +55,9 @@ class CharacterDetailFragment : Fragment() {
 
     private fun setupObserver() {
         characterDetailViewModel.characterDetailLiveData.observe(viewLifecycleOwner) {
+            if (it.type.isEmpty()) {
+                binding.typeCharacterDetailTextView.setText(getString(R.string.unknown))
+            }
         }
         characterDetailViewModel.episodeListLiveData.observe(viewLifecycleOwner) { resources ->
             adapter.updateData(resources)

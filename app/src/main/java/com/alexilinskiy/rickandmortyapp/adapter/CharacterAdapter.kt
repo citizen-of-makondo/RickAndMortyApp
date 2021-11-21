@@ -16,7 +16,7 @@ class CharacterAdapter(var onClick: (item: CharacterDTO) -> Unit = { _ -> }) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BindingHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_character_item, parent, false)
+            .inflate(R.layout.fragment_character_item_in_episode_and_location, parent, false)
         )
     }
 

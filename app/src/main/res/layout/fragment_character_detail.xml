@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="viewmodel"
             type="com.alexilinskiy.rickandmortyapp.ui.character.characterDetail.CharacterDetailViewModel" />
@@ -24,6 +26,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="@string/image_of_character"
                 android:setImage="@{viewmodel.imageURL}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_detail_character"
-                android:hint="@string/specie"
-                android:text="@{@string/type_detail + ' ' + viewmodel.characterDetailLiveData.type}"
+                android:hint="@string/type"
+                android:text="@{@string/type_detail(viewmodel.characterDetailLiveData.type)}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/specieCharacterDetailTextView" />
@@ -114,9 +117,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/episodeRecyclerView"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/locationCharacterDetailTextView"
                 app:layout_constraintTop_toBottomOf="@+id/locationCharacterDetailTextView"
                 tools:listitem="@layout/fragment_episode_item" />
