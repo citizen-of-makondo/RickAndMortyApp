@@ -1,4 +1,5 @@
 Мое первое приложение как андроид разработчика - неофициальный гайд по вселенной мультфильма Рик и Морти. 
+
 api: https://rickandmortyapi.com/
 
 Стек: Kotlin, MVVM, Koin, Retrofit, Glide, Data binding
